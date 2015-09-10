@@ -1,4 +1,8 @@
+# build artifacts
 *.class
+package/
+target/
+out/
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -10,3 +14,33 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# eclipse specific git ignore
+*.pydevproject
+.project
+.metadata
+bin/**
+build/
+logs/
+deploy/
+tmp/**
+tmp/**/*
+*.sqlite
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# Intellij IDEA
+.idea/
+*.iml

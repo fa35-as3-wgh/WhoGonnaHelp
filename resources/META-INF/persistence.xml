@@ -1,0 +1,21 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+    <persistence-unit name="who_gonna_help">
+        <!-- BEGIN: Support for JSR 310: Java8 Time and Date API,
+                    can be removed when using hibernate-jpa which supports JSR 310 -->
+        <class>com.github.marschall.threeten.jpa.LocalTimeConverter</class>
+        <class>com.github.marschall.threeten.jpa.LocalDateConverter</class>
+        <class>com.github.marschall.threeten.jpa.LocalDateTimeConverter</class>
+        <!-- END: Support for JSR 310: Java8 Time and Date API -->
+
+        <properties>
+            <property name="hibernate.archive.autodetection" value="class, hbm"/>
+            <!-- DEBUG setting: clear all database tables on start: -->
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <!-- DEBUG setting: print out every sql query on console: -->
+            <property name="hibernate.show_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>
