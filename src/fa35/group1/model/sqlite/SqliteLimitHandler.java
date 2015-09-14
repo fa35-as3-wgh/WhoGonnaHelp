@@ -6,7 +6,7 @@ import org.hibernate.engine.spi.RowSelection;
 
 /**
  * An implementation of {@link org.hibernate.dialect.pagination.LimitHandler}
- * for the {@link fa35.group1.model.sqlite.SqliteDialect} based on
+ * for the {@link SqliteDialect} based on
  * {@link org.hibernate.dialect.pagination.CUBRIDLimitHandler}.
  * copied from https://gist.github.com/jsumners/8849909
  */

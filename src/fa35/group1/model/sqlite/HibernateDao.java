@@ -24,8 +24,8 @@ public class HibernateDao {
     EntityManager entityManager;
     EntityTransaction entityTransaction;
 
-    public static HibernateDao getDao() {
-        if (dao != null) {
+    public static HibernateDao getDao() throws Exception {
+        if (dao == null) {
             dao = new HibernateDao();
         }
         return dao;
@@ -38,7 +38,7 @@ public class HibernateDao {
         properties.put("hibernate.connection.url", "jdbc:sqlite:" + SQLITE_FILE);
         properties.put("hibernate.dialect", "fa35.group1.model.sqlite.SqliteDialect");
         properties.put("hibernate.c3p0.min_size", CONNECTIONS);
-        properties.put("hiberante.c3p0.max_size", CONNECTIONS);
+        properties.put("hibernate.c3p0.max_size", CONNECTIONS);
         properties.put("hibernate.c3p0.max_statements", "50");
 
         this.entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_NAME, properties);
@@ -46,21 +46,21 @@ public class HibernateDao {
         this.entityManager = this.entityManagerFactory.createEntityManager();
     }
 
-    public final void beginTransaction() {
+    private void beginTransaction() {
         if (this.entityManager != null) {
             this.entityTransaction = this.entityManager.getTransaction();
             this.entityTransaction.begin();
         }
     }
 
-    public final void commitTransaction() {
+    private void commitTransaction() {
         if (this.entityTransaction != null) {
             this.entityTransaction.commit();
             this.entityTransaction = null;
         }
     }
 
-    public final void rollbackTransaction() {
+    private void rollbackTransaction() {
         if (this.entityTransaction != null) {
             this.entityTransaction.rollback();
             this.entityTransaction = null;
@@ -68,11 +68,11 @@ public class HibernateDao {
     }
 
     public final <T> T getResult(final String queryName, final Class<T> clazz, Map.Entry... parameters) {
-        return this.getResult(queryName, clazz, parametersToMap(parameters));
+        return (T) this.getResult(queryName, clazz, parametersToMap(parameters));
     }
 
     public final <T> T getResult(final String queryName, final Class<T> clazz, Map<String, Object> parameters) {
-        return this.getResult(this.entityManager.createNamedQuery(queryName, clazz), parameters);
+        return (T) this.getResult(this.entityManager.createNamedQuery(queryName, clazz), parameters);
     }
 
     private <T> T getResult(final TypedQuery<T> query, final Map<String, Object> parameters) {
@@ -142,7 +142,7 @@ public class HibernateDao {
         return results;
     }
 
-    public final Object insert(Object object) {
+    public final <T> T insert(T object) {
         try {
             this.beginTransaction();
             // object may contain a list or array of objects which are already known to entityManager
@@ -171,7 +171,7 @@ public class HibernateDao {
         return result;
     }
 
-    public final void remove(Object object) {
+    public final <T> void remove(T object) {
         try {
             this.beginTransaction();
             this.entityManager.remove(object);

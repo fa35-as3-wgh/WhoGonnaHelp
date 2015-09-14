@@ -16,7 +16,7 @@ import java.sql.Types;
  */
 public class SqliteDialect extends Dialect {
 
-    protected SqliteDialect() {
+    public SqliteDialect() {
         registerColumnType(Types.BIT, "integer");
         registerColumnType(Types.TINYINT, "tinyint");
         registerColumnType(Types.SMALLINT, "smallint");
