@@ -1,13 +1,10 @@
 package fa35.group1.model.sqlite;
 
-import fa35.group1.model.FriendEntity;
-import fa35.group1.model.IPersistence;
-import fa35.group1.model.PaymentEntity;
-import fa35.group1.model.SkillEntity;
+import fa35.group1.model.*;
 
 import java.util.List;
 
-public class SqlitePersistence implements IPersistence {
+public class SqlitePersistence implements IPersistence, IResetable {
 
     private HibernateDao dao;
 
@@ -75,5 +72,10 @@ public class SqlitePersistence implements IPersistence {
     @Override
     public void removePayment(PaymentEntity paymentEntity) {
         this.dao.remove(paymentEntity);
+    }
+
+    @Override
+    public void reset() {
+        HibernateDao.reset();
     }
 }

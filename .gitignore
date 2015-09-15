@@ -25,6 +25,7 @@ logs/
 deploy/
 tmp/**
 tmp/**/*
+db.xml
 *.sqlite
 *.tmp
 *.bak
