@@ -12,7 +12,7 @@
 
         <properties>
             <property name="hibernate.archive.autodetection" value="class, hbm"/>
-            <!-- DEBUG setting: clear all database tables on start: -->
+            <!-- DEBUG setting: reset all database tables on start: -->
             <property name="hibernate.hbm2ddl.auto" value="create"/>
             <!-- DEBUG setting: print out every sql query on console: -->
             <property name="hibernate.show_sql" value="true"/>

@@ -194,4 +194,8 @@ public class HibernateDao {
         return Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue);
     }
 
+    // only for testing
+    protected static void reset() {
+        dao = new HibernateDao();
+    }
 }
