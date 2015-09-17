@@ -1,10 +1,10 @@
 package fa35.group2.model;
 
-import fa35.group2.model.xml.XmlPersistence;
-import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import fa35.group2.model.sqlite.SqlitePersistence;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +19,8 @@ public class PersistenceTest {
 
     public void createDatabase() {
         System.out.println("|- createDatabase");
-//        persistence = new SqlitePersistence();
-        persistence = new XmlPersistence();
+        persistence = new SqlitePersistence();
+//        persistence = new XmlPersistence();
 
         // check if persistence is created successfully
         Assert.assertTrue(persistence.initializePersistence());
@@ -53,7 +53,7 @@ public class PersistenceTest {
         skills.add(entity);
     }
 
-    @BeforeMethod
+    @Before
     public void createFriends() {
         createDatabase();
 
@@ -85,7 +85,7 @@ public class PersistenceTest {
         friends.add(entity);
     }
 
-    @AfterMethod
+    @After
     public void reset() {
         if (persistence instanceof IResetable) {
 
