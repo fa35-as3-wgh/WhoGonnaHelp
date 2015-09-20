@@ -16,6 +16,7 @@ public class HibernateDao {
     private static final int CONNECTIONS = 1;
     private static final String SQLITE_FILE = "db.sqlite";
     private static final String PERSISTENCE_NAME = "who_gonna_help";
+    private static final String PERSISTENCE_TEST_NAME = "who_gonna_help_test";
 
     private static HibernateDao dao;
 
@@ -24,14 +25,14 @@ public class HibernateDao {
     EntityManager entityManager;
     EntityTransaction entityTransaction;
 
-    public static HibernateDao getDao() throws Exception {
+    public static HibernateDao getDao(boolean test) throws Exception {
         if (dao == null) {
-            dao = new HibernateDao();
+            dao = new HibernateDao(test);
         }
         return dao;
     }
 
-    HibernateDao() {
+    HibernateDao(boolean test) {
         Map<String, Object> properties = new HashMap<String, Object>();
 
         properties.put("hibernate.connection.driver_class", "org.sqlite.JDBC");
@@ -41,7 +42,7 @@ public class HibernateDao {
         properties.put("hibernate.c3p0.max_size", CONNECTIONS);
         properties.put("hibernate.c3p0.max_statements", "50");
 
-        this.entityManagerFactory = Persistence.createEntityManagerFactory(PERSISTENCE_NAME, properties);
+        this.entityManagerFactory = Persistence.createEntityManagerFactory(test ? PERSISTENCE_TEST_NAME : PERSISTENCE_NAME, properties);
 
         this.entityManager = this.entityManagerFactory.createEntityManager();
     }
@@ -196,6 +197,6 @@ public class HibernateDao {
 
     // only for testing
     protected static void reset() {
-        dao = new HibernateDao();
+        dao = new HibernateDao(true);
     }
 }
