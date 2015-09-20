@@ -4,14 +4,19 @@ import fa35.group1.model.FriendEntity;
 import fa35.group1.model.PaymentEntity;
 import fa35.group1.model.SkillEntity;
 import org.w3c.dom.*;
+import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,19 +25,49 @@ import java.util.Map;
 
 public class XmlMarshaller {
 
+    private static class SchemaErrorHandler implements ErrorHandler {
+        @Override
+        public void warning(SAXParseException exception) throws SAXException {
+            System.out.println("Warning: " + exception.getMessage() + " getColumnNumber is " +
+                    exception.getColumnNumber() + " getLineNumber " + exception.getLineNumber() + " getPublicId " +
+                    exception.getPublicId() + " getSystemId " + exception.getSystemId());
+        }
+
+        @Override
+        public void error(SAXParseException exception) throws SAXException {
+            throw new SAXException("Error: " + exception.getMessage() + " getColumnNumber is " +
+                    exception.getColumnNumber() + " getLineNumber " + exception.getLineNumber() + " getPublicId " +
+                    exception.getPublicId() + " getSystemId " + exception.getSystemId());
+        }
+
+        @Override
+        public void fatalError(SAXParseException exception) throws SAXException {
+            throw new SAXException("Fatal Error: " + exception.getMessage() + " getColumnNumber is " +
+                    exception.getColumnNumber() + " getLineNumber " + exception.getLineNumber() + " getPublicId " +
+                    exception.getPublicId() + " getSystemId " + exception.getSystemId());
+        }
+    }
+
     private static DocumentBuilder documentBuilder;
     private static Transformer transformer;
 
     static {
         try {
+            String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
+            SchemaFactory factory = SchemaFactory.newInstance(language);
+            Schema schema = factory.newSchema(XmlMarshaller.class.getResource("/fa35/group1/model/xml/schema.xsd"));
+
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            documentBuilderFactory.setSchema(schema);
             documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            SchemaErrorHandler errorHandler = new SchemaErrorHandler();
+            documentBuilder.setErrorHandler(errorHandler);
 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-        } catch (ParserConfigurationException | TransformerConfigurationException e) {
+        } catch (ParserConfigurationException | TransformerConfigurationException | SAXException e) {
             e.printStackTrace();
         }
     }
@@ -351,8 +386,12 @@ public class XmlMarshaller {
 
     public void load(File file) throws IOException, SAXException, NullPointerException {
         if (file != null) {
-            this.document = documentBuilder.parse(file);
-            this.document.normalize();
+            try {
+                this.document = documentBuilder.parse(file);
+                this.document.normalize();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else throw new NullPointerException("File is null");
     }
 }
