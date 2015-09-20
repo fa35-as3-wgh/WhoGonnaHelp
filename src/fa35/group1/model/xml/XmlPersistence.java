@@ -11,19 +11,24 @@ import java.util.*;
 public class XmlPersistence implements IPersistence, IResetable {
 
     private static final String FILE_NAME = "db.xml";
+    private static final String FILE_TEST_NAME = "test_db.xml";
 
     private Map<Integer, PaymentEntity> paymentEntityMap;
     private Map<Integer, SkillEntity> skillEntityMap;
     private Map<Integer, FriendEntity> friendEntityMap;
 
+    private boolean test;
+
     @Override
-    public boolean initializePersistence() {
+    public boolean initializePersistence(boolean test) {
+
+        this.test = test;
 
         this.paymentEntityMap = new TreeMap<Integer, PaymentEntity>();
         this.skillEntityMap = new TreeMap<Integer, SkillEntity>();
         this.friendEntityMap = new TreeMap<Integer, FriendEntity>();
 
-        File file = new File(FILE_NAME);
+        File file = new File(test ? FILE_TEST_NAME : FILE_NAME);
         if (file.exists() && file.canRead()) {
             return load(file);
         } else {
@@ -165,7 +170,7 @@ public class XmlPersistence implements IPersistence, IResetable {
         XmlMarshaller marshaller = new XmlMarshaller(this.paymentEntityMap, this.skillEntityMap, this.friendEntityMap);
         try {
             marshaller.marshall();
-            marshaller.save(new File(FILE_NAME));
+            marshaller.save(new File(test ? FILE_TEST_NAME : FILE_NAME));
         } catch (TransformerException e) {
             e.printStackTrace();
         }

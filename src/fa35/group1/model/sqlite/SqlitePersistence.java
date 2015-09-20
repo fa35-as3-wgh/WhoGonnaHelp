@@ -9,9 +9,9 @@ public class SqlitePersistence implements IPersistence, IResetable {
     private HibernateDao dao;
 
     @Override
-    public boolean initializePersistence() {
+    public boolean initializePersistence(boolean test) {
         try {
-            this.dao = HibernateDao.getDao();
+            this.dao = HibernateDao.getDao(test);
         } catch (Exception e) {
             e.printStackTrace();
         }

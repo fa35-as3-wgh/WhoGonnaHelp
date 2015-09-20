@@ -4,7 +4,11 @@ import java.util.List;
 
 public interface IPersistence {
 
-    boolean initializePersistence();
+    default boolean initializePersistence() {
+        return initializePersistence(false);
+    }
+
+    boolean initializePersistence(boolean test);
 
     // Freunde
     List<FriendEntity> getAllFriends(); // nur id und name

@@ -1,6 +1,6 @@
 package fa35.group1.model;
 
-import fa35.group1.model.sqlite.SqlitePersistence;
+import fa35.group1.Main;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,11 +19,10 @@ public class PersistenceTest {
 
     public void createDatabase() {
         System.out.println("|- createDatabase");
-        persistence = new SqlitePersistence();
-//        persistence = new XmlPersistence();
+        persistence = Main.getPersistence();
 
         // check if persistence is created successfully
-        Assert.assertTrue(persistence.initializePersistence());
+        Assert.assertTrue(persistence.initializePersistence(true));
     }
 
     public void createPayments() {
