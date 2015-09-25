@@ -73,7 +73,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>fa35.group1.Main</mainClass>
+                            <mainClass>fa35.group2.Main</mainClass>
                         </manifest>
                         <manifestEntries>
                             <mode>Created-By</mode>

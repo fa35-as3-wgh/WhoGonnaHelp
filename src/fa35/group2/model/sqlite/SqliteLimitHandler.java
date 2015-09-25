@@ -1,4 +1,4 @@
-package fa35.group1.model.sqlite;
+package fa35.group2.model.sqlite;
 
 import org.hibernate.dialect.pagination.AbstractLimitHandler;
 import org.hibernate.dialect.pagination.LimitHelper;
