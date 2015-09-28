@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence name="who_gonna_help">
+    <skills>
+        <skill name="Skill 1"/>
+    </skills>
+    <payments>
+        <payment name="Payment 1"/>
+    </payments>
+    <friends>
+        <friend name="Friend 1" contact="Contact 1" note="Note 1"/>
+    </friends>
+</persistence>

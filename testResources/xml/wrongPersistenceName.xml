@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence name="something_different">
+    <skills>
+        <skill skill_id="1" name="Skill 1"/>
+    </skills>
+    <payments>
+        <payment payment_id="1" name="Payment 1"/>
+    </payments>
+    <friends>
+        <friend friend_id="1" name="Friend 1" contact="Contact 1" note="Note 1">
+            <skills>
+                <skill skill_id="1"/>
+            </skills>
+            <payments>
+                <payment payment_id="1"/>
+            </payments>
+        </friend>
+    </friends>
+</persistence>

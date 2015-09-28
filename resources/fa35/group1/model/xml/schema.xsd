@@ -27,11 +27,13 @@
         </xs:simpleContent>
     </xs:complexType>
     <xs:complexType name="persistenceType">
-        <xs:choice maxOccurs="unbounded" minOccurs="0">
-            <xs:element type="skillsType" name="skills"/>
-            <xs:element type="paymentsType" name="payments"/>
+        <xs:sequence maxOccurs="unbounded" minOccurs="0">
+            <xs:choice maxOccurs="unbounded" minOccurs="0">
+                <xs:element type="skillsType" name="skills"/>
+                <xs:element type="paymentsType" name="payments"/>
+            </xs:choice>
             <xs:element type="friendsType" name="friends"/>
-        </xs:choice>
+        </xs:sequence>
         <xs:attribute type="xs:string" name="name"/>
     </xs:complexType>
     <xs:complexType name="friendsType">

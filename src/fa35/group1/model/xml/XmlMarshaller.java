@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class XmlMarshaller {
 
@@ -98,6 +100,7 @@ public class XmlMarshaller {
         root.appendChild(marshallFriend());
 
         this.document.appendChild(root);
+        this.document.setXmlStandalone(true);
     }
 
     public Element marshallPayments() {
@@ -113,7 +116,7 @@ public class XmlMarshaller {
                 payment.setAttributeNode(attr);
 
                 attr = this.document.createAttribute("name");
-                attr.setValue(entity.getName());
+                attr.setValue(escapeXml(entity.getName()));
                 payment.setAttributeNode(attr);
 
                 payments.appendChild(payment);
@@ -136,7 +139,7 @@ public class XmlMarshaller {
                 skill.setAttributeNode(attr);
 
                 attr = this.document.createAttribute("name");
-                attr.setValue(entity.getName());
+                attr.setValue(escapeXml(entity.getName()));
                 skill.setAttributeNode(attr);
 
                 skills.appendChild(skill);
@@ -159,15 +162,15 @@ public class XmlMarshaller {
                 friend.setAttributeNode(attr);
 
                 attr = this.document.createAttribute("name");
-                attr.setValue(entity.getName());
+                attr.setValue(escapeXml(entity.getName()));
                 friend.setAttributeNode(attr);
 
                 attr = this.document.createAttribute("contact");
-                attr.setValue(entity.getContact());
+                attr.setValue(escapeXml(entity.getContact()));
                 friend.setAttributeNode(attr);
 
                 attr = this.document.createAttribute("note");
-                attr.setValue(entity.getNote());
+                attr.setValue(escapeXml(entity.getNote()));
                 friend.setAttributeNode(attr);
 
                 friend.appendChild(marshallFriendPayments(entity.getPayments()));
@@ -228,24 +231,26 @@ public class XmlMarshaller {
 
     public void unmarshall() {
 
-        Element element = this.document.getDocumentElement();
-        element.normalize();
-        if ("persistence".equals(element.getNodeName()) && "who_gonna_help".equals(element.getAttribute("name"))) {
+        if (this.document != null) {
+            Element element = this.document.getDocumentElement();
+            element.normalize();
+            if ("persistence".equals(element.getNodeName()) && "who_gonna_help".equals(element.getAttribute("name"))) {
 
-            NodeList children = element.getChildNodes();
+                NodeList children = element.getChildNodes();
 
-            for (int index = 0; index < children.getLength(); index++) {
-                Node child = children.item(index);
-                switch (child.getNodeName()) {
-                    case "payments":
-                        unmarshallPayments(child);
-                        break;
-                    case "skills":
-                        unmarshallSkills(child);
-                        break;
-                    case "friends":
-                        unmarshallFriends(child);
-                        break;
+                for (int index = 0; index < children.getLength(); index++) {
+                    Node child = children.item(index);
+                    switch (child.getNodeName()) {
+                        case "payments":
+                            unmarshallPayments(child);
+                            break;
+                        case "skills":
+                            unmarshallSkills(child);
+                            break;
+                        case "friends":
+                            unmarshallFriends(child);
+                            break;
+                    }
                 }
             }
         }
@@ -264,7 +269,7 @@ public class XmlMarshaller {
                         int id = Integer.parseInt(idString);
                         PaymentEntity paymentEntity = new PaymentEntity();
                         paymentEntity.setId(id);
-                        paymentEntity.setName(attributes.getNamedItem("name").getTextContent());
+                        paymentEntity.setName(unescapeXml(attributes.getNamedItem("name").getTextContent()));
 
                         this.paymentEntityMap.put(id, paymentEntity);
                     }
@@ -286,7 +291,7 @@ public class XmlMarshaller {
                         int id = Integer.parseInt(idString);
                         SkillEntity skillEntity = new SkillEntity();
                         skillEntity.setId(id);
-                        skillEntity.setName(attributes.getNamedItem("name").getTextContent());
+                        skillEntity.setName(unescapeXml(attributes.getNamedItem("name").getTextContent()));
 
                         this.skillEntityMap.put(id, skillEntity);
                     }
@@ -308,9 +313,9 @@ public class XmlMarshaller {
                         int id = Integer.parseInt(idString);
                         FriendEntity friendEntity = new FriendEntity();
                         friendEntity.setId(id);
-                        friendEntity.setName(attributes.getNamedItem("name").getTextContent());
-                        friendEntity.setContact(attributes.getNamedItem("contact").getTextContent());
-                        friendEntity.setNote(attributes.getNamedItem("note").getTextContent());
+                        friendEntity.setName(unescapeXml(attributes.getNamedItem("name").getTextContent()));
+                        friendEntity.setContact(unescapeXml(attributes.getNamedItem("contact").getTextContent()));
+                        friendEntity.setNote(unescapeXml(attributes.getNamedItem("note").getTextContent()));
 
                         NodeList friendChildren = friend.getChildNodes();
                         for (int childIndex = 0; childIndex < friendChildren.getLength(); childIndex++) {
@@ -386,12 +391,97 @@ public class XmlMarshaller {
 
     public void load(File file) throws IOException, SAXException, NullPointerException {
         if (file != null) {
-            try {
-                this.document = documentBuilder.parse(file);
-                this.document.normalize();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            this.document = documentBuilder.parse(file);
+            this.document.normalize();
         } else throw new NullPointerException("File is null");
+    }
+
+    private String escapeXml(String text) {
+        if (text == null)
+            return null;
+
+        StringBuffer result = new StringBuffer();
+        text.chars().mapToObj(value -> (char) value).forEach(character -> {
+            switch (character) {
+                case '<':
+                    result.append("&lt;");
+                    break;
+                case '>':
+                    result.append("&gt;");
+                    break;
+                case '&':
+                    result.append("&amp;");
+                    break;
+                case '\'':
+                    result.append("&apos;");
+                    break;
+                case '\"':
+                    result.append("&quot;");
+                    break;
+                case '\t':
+                    result.append("&#x9;");
+                    break;
+                case '\n':
+                    result.append("&#xA;");
+                    break;
+                case '\r':
+                    result.append("&#xD;");
+                    break;
+                default:
+                    if (character > 0x7e) {
+                        result.append("&#" + ((int) character) + ";");
+                    } else
+                        result.append(character);
+            }
+        });
+        return result.toString();
+    }
+
+    private String unescapeXml(String text) {
+        if (text == null)
+            return null;
+
+        Pattern xmlEntityRegex = Pattern.compile("&(#?)([^;]+);");
+        StringBuffer unescapedOutput = new StringBuffer(text.length());
+
+        Matcher m = xmlEntityRegex.matcher(text);
+        String entity;
+        String hashmark;
+        String ent;
+        int code;
+        while (m.find()) {
+            ent = m.group(2);
+            hashmark = m.group(1);
+            if (hashmark != null && hashmark.length() > 0) {
+                code = Integer.parseInt(ent);
+                entity = Character.toString((char) code);
+            } else {
+                switch (ent) {
+                    case "&lt;":
+                        entity = "<";
+                        break;
+                    case "&gt;":
+                        entity = ">";
+                        break;
+                    case "&amp;":
+                        entity = "&";
+                        break;
+                    case "&apos;":
+                        entity = "\'";
+                        break;
+                    case "&quot;":
+                        entity = "\"";
+                        break;
+                    default:
+                        //not a known entity - ignore it
+                        entity = "&" + ent + ';';
+                        break;
+                }
+            }
+            m.appendReplacement(unescapedOutput, entity);
+        }
+        m.appendTail(unescapedOutput);
+
+        return unescapedOutput.toString();
     }
 }
