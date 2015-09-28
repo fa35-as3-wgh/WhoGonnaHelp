@@ -1,14 +1,13 @@
 package fa35.group2.model;
 
 import fa35.group2.Main;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+import org.junit.runners.MethodSorters;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@FixMethodOrder(value = MethodSorters.JVM)
 public class PersistenceTest {
 
     private IPersistence persistence;
