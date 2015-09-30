@@ -19,6 +19,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -87,7 +88,7 @@ public class XmlMarshaller {
         this.friendEntityMap = friendEntityMap;
     }
 
-    public void marshall() {
+    public void marshal() {
         this.document = documentBuilder.newDocument();
 
         Element root = this.document.createElement("persistence");
@@ -95,15 +96,15 @@ public class XmlMarshaller {
         attr.setValue("who_gonna_help");
         root.setAttributeNode(attr);
 
-        root.appendChild(marshallPayments());
-        root.appendChild(marshallSkills());
-        root.appendChild(marshallFriend());
+        root.appendChild(marshalPayments());
+        root.appendChild(marshalSkills());
+        root.appendChild(marshalFriend());
 
         this.document.appendChild(root);
         this.document.setXmlStandalone(true);
     }
 
-    public Element marshallPayments() {
+    public Element marshalPayments() {
         Element payments = this.document.createElement("payments");
 
         if (this.paymentEntityMap != null) {
@@ -126,7 +127,7 @@ public class XmlMarshaller {
         return payments;
     }
 
-    public Element marshallSkills() {
+    public Element marshalSkills() {
         Element skills = this.document.createElement("skills");
 
         if (this.skillEntityMap != null) {
@@ -149,7 +150,7 @@ public class XmlMarshaller {
         return skills;
     }
 
-    public Element marshallFriend() {
+    public Element marshalFriend() {
         Element friends = this.document.createElement("friends");
 
         if (friendEntityMap != null) {
@@ -173,8 +174,8 @@ public class XmlMarshaller {
                 attr.setValue(escapeXml(entity.getNote()));
                 friend.setAttributeNode(attr);
 
-                friend.appendChild(marshallFriendPayments(entity.getPayments()));
-                friend.appendChild(marshallFriendSkills(entity.getSkills()));
+                friend.appendChild(marshalFriendPayments(entity.getPayments()));
+                friend.appendChild(marshalFriendSkills(entity.getSkills()));
 
                 friends.appendChild(friend);
             });
@@ -183,7 +184,7 @@ public class XmlMarshaller {
         return friends;
     }
 
-    private Element marshallFriendPayments(List<PaymentEntity> paymentEntities) {
+    private Element marshalFriendPayments(List<PaymentEntity> paymentEntities) {
         Element payments = this.document.createElement("payments");
 
         if (paymentEntities != null) {
@@ -202,7 +203,7 @@ public class XmlMarshaller {
         return payments;
     }
 
-    private Element marshallFriendSkills(List<SkillEntity> skillEntities) {
+    private Element marshalFriendSkills(List<SkillEntity> skillEntities) {
         Element skills = this.document.createElement("skills");
 
         if (skillEntities != null) {
@@ -229,7 +230,29 @@ public class XmlMarshaller {
         } else throw new NullPointerException("Document or file is null");
     }
 
-    public void unmarshall() {
+    public String toXmlString() throws TransformerException, NullPointerException {
+        if (this.document != null) {
+            DOMSource source = new DOMSource(this.document);
+            OutputStream output = new OutputStream() {
+                StringBuilder stringBuilder = new StringBuilder();
+
+                @Override
+                public void write(int byteToWrite) throws IOException {
+                    stringBuilder.append((char) byteToWrite);
+                }
+
+                @Override
+                public String toString() {
+                    return stringBuilder.toString();
+                }
+            };
+            transformer.transform(source, new StreamResult(output));
+
+            return output.toString();
+        } else throw new NullPointerException("Document or file is null");
+    }
+
+    public void unmarshal() {
 
         if (this.document != null) {
             Element element = this.document.getDocumentElement();
@@ -242,13 +265,13 @@ public class XmlMarshaller {
                     Node child = children.item(index);
                     switch (child.getNodeName()) {
                         case "payments":
-                            unmarshallPayments(child);
+                            unmarshalPayments(child);
                             break;
                         case "skills":
-                            unmarshallSkills(child);
+                            unmarshalSkills(child);
                             break;
                         case "friends":
-                            unmarshallFriends(child);
+                            unmarshalFriends(child);
                             break;
                     }
                 }
@@ -256,7 +279,7 @@ public class XmlMarshaller {
         }
     }
 
-    private void unmarshallPayments(Node paymentNode) {
+    private void unmarshalPayments(Node paymentNode) {
         NodeList paymentNodes = paymentNode.getChildNodes();
         if (paymentNodes != null) {
             for (int index = 0; index < paymentNodes.getLength(); index++) {
@@ -278,7 +301,7 @@ public class XmlMarshaller {
         }
     }
 
-    private void unmarshallSkills(Node skillNode) {
+    private void unmarshalSkills(Node skillNode) {
         NodeList skillNodes = skillNode.getChildNodes();
         if (skillNodes != null) {
             for (int index = 0; index < skillNodes.getLength(); index++) {
@@ -300,7 +323,7 @@ public class XmlMarshaller {
         }
     }
 
-    private void unmarshallFriends(Node friendNode) {
+    private void unmarshalFriends(Node friendNode) {
         NodeList friendNodes = friendNode.getChildNodes();
         if (friendNodes != null) {
             for (int index = 0; index < friendNodes.getLength(); index++) {
@@ -322,10 +345,10 @@ public class XmlMarshaller {
                             Node friendChild = friendChildren.item(childIndex);
                             switch (friendChild.getNodeName()) {
                                 case "payments":
-                                    friendEntity.getPayments().addAll(unmarshallFriendPayments(friendChild.getChildNodes()));
+                                    friendEntity.getPayments().addAll(unmarshalFriendPayments(friendChild.getChildNodes()));
                                     break;
                                 case "skills":
-                                    friendEntity.getSkills().addAll(unmarshallFriendSkills(friendChild.getChildNodes()));
+                                    friendEntity.getSkills().addAll(unmarshalFriendSkills(friendChild.getChildNodes()));
                                     break;
                             }
                         }
@@ -337,7 +360,7 @@ public class XmlMarshaller {
         }
     }
 
-    private List<PaymentEntity> unmarshallFriendPayments(NodeList paymentNodes) {
+    private List<PaymentEntity> unmarshalFriendPayments(NodeList paymentNodes) {
 
         List<PaymentEntity> paymentEntities = new ArrayList<PaymentEntity>();
 
@@ -363,7 +386,7 @@ public class XmlMarshaller {
         return paymentEntities;
     }
 
-    private List<SkillEntity> unmarshallFriendSkills(NodeList skillNodes) {
+    private List<SkillEntity> unmarshalFriendSkills(NodeList skillNodes) {
 
         List<SkillEntity> skillEntities = new ArrayList<SkillEntity>();
 

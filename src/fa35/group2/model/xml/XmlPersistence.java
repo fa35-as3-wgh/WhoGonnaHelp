@@ -158,7 +158,7 @@ public class XmlPersistence implements IPersistence, IResetable {
         XmlMarshaller marshaller = new XmlMarshaller(this.paymentEntityMap, this.skillEntityMap, this.friendEntityMap);
         try {
             marshaller.load(file);
-            marshaller.unmarshall();
+            marshaller.unmarshal();
             return true;
         } catch (IOException | SAXException e) {
             e.printStackTrace();
@@ -169,7 +169,7 @@ public class XmlPersistence implements IPersistence, IResetable {
     private void persist() {
         XmlMarshaller marshaller = new XmlMarshaller(this.paymentEntityMap, this.skillEntityMap, this.friendEntityMap);
         try {
-            marshaller.marshall();
+            marshaller.marshal();
             marshaller.save(new File(test ? FILE_TEST_NAME : FILE_NAME));
         } catch (TransformerException e) {
             e.printStackTrace();

@@ -39,8 +39,8 @@ public class XmlUnMarshallerTest {
         System.out.println("|- load file");
         this.xmlMarshaller.load(new File("testResources/xml/" + file));
 
-        System.out.println("|- unmarshall content");
-        this.xmlMarshaller.unmarshall();
+        System.out.println("|- unmarshal content");
+        this.xmlMarshaller.unmarshal();
     }
 
     @Test
@@ -122,7 +122,33 @@ public class XmlUnMarshallerTest {
         Assert.assertFalse(this.skillEntityMap.isEmpty());
         Assert.assertFalse(this.friendEntityMap.isEmpty());
 
-        //TODO
+        // check payments
+        Assert.assertTrue(this.paymentEntityMap.containsKey(1));
+
+        PaymentEntity paymentEntity = new PaymentEntity();
+        paymentEntity.setId(1);
+        paymentEntity.setName("Payment 1");
+        Assert.assertEquals(paymentEntity, this.paymentEntityMap.get(1));
+
+        // check skills
+        Assert.assertTrue(this.skillEntityMap.containsKey(1));
+
+        SkillEntity skillEntity = new SkillEntity();
+        skillEntity.setId(1);
+        skillEntity.setName("Skill 1");
+        Assert.assertEquals(skillEntity, this.skillEntityMap.get(1));
+
+        // check friends
+        Assert.assertTrue(this.friendEntityMap.containsKey(1));
+
+        FriendEntity friendEntity = new FriendEntity();
+        friendEntity.setId(1);
+        friendEntity.setName("Friend 1");
+        friendEntity.setContact("Contact 1");
+        friendEntity.setNote("Note 1");
+        friendEntity.getPayments().add(paymentEntity);
+        friendEntity.getSkills().add(skillEntity);
+        Assert.assertEquals(friendEntity, this.friendEntityMap.get(1));
     }
 
     @Test
@@ -176,7 +202,17 @@ public class XmlUnMarshallerTest {
         Assert.assertTrue(this.skillEntityMap.isEmpty());
         Assert.assertFalse(this.friendEntityMap.isEmpty());
 
-        //TODO
+        // check friends
+        Assert.assertTrue(this.friendEntityMap.containsKey(1));
+
+        FriendEntity friendEntity = new FriendEntity();
+        friendEntity.setId(1);
+        friendEntity.setName("Friend 1");
+        friendEntity.setContact("Contact 1");
+        friendEntity.setNote("Note 1");
+        Assert.assertTrue(this.friendEntityMap.get(1).getPayments().isEmpty());
+        Assert.assertTrue(this.friendEntityMap.get(1).getSkills().isEmpty());
+        Assert.assertEquals(friendEntity, this.friendEntityMap.get(1));
     }
 
     @Test
@@ -230,7 +266,56 @@ public class XmlUnMarshallerTest {
         Assert.assertFalse(this.skillEntityMap.isEmpty());
         Assert.assertFalse(this.friendEntityMap.isEmpty());
 
-        //TODO
+        // check payments
+        Assert.assertTrue(this.paymentEntityMap.containsKey(1));
+
+        PaymentEntity paymentEntity = new PaymentEntity();
+        paymentEntity.setId(1);
+        paymentEntity.setName("Payment 1");
+        Assert.assertEquals(paymentEntity, this.paymentEntityMap.get(1));
+
+        Assert.assertTrue(this.paymentEntityMap.containsKey(2));
+
+        PaymentEntity paymentEntity2 = new PaymentEntity();
+        paymentEntity2.setId(2);
+        paymentEntity2.setName("Payment 2");
+        Assert.assertEquals(paymentEntity2, this.paymentEntityMap.get(2));
+
+        // check skills
+        Assert.assertTrue(this.skillEntityMap.containsKey(1));
+
+        SkillEntity skillEntity = new SkillEntity();
+        skillEntity.setId(1);
+        skillEntity.setName("Skill 1");
+        Assert.assertEquals(skillEntity, this.skillEntityMap.get(1));
+
+        Assert.assertTrue(this.skillEntityMap.containsKey(2));
+
+        SkillEntity skillEntity2 = new SkillEntity();
+        skillEntity2.setId(2);
+        skillEntity2.setName("Skill 2");
+        Assert.assertEquals(skillEntity2, this.skillEntityMap.get(2));
+
+        // check friends
+        Assert.assertTrue(this.friendEntityMap.containsKey(1));
+        FriendEntity friendEntity = new FriendEntity();
+        friendEntity.setId(1);
+        friendEntity.setName("Friend 1");
+        friendEntity.setContact("Contact 1");
+        friendEntity.setNote("Note 1");
+        friendEntity.getPayments().add(paymentEntity);
+        friendEntity.getSkills().add(skillEntity);
+        Assert.assertEquals(friendEntity, this.friendEntityMap.get(1));
+
+        Assert.assertTrue(this.friendEntityMap.containsKey(2));
+        FriendEntity friendEntity2 = new FriendEntity();
+        friendEntity2.setId(2);
+        friendEntity2.setName("Friend 2");
+        friendEntity2.setContact("Contact 2");
+        friendEntity2.setNote("Note 2");
+        friendEntity2.getPayments().add(paymentEntity2);
+        friendEntity2.getSkills().add(skillEntity2);
+        Assert.assertEquals(friendEntity2, this.friendEntityMap.get(2));
     }
 
     @Test
@@ -267,7 +352,60 @@ public class XmlUnMarshallerTest {
         Assert.assertFalse(this.skillEntityMap.isEmpty());
         Assert.assertFalse(this.friendEntityMap.isEmpty());
 
-        //TODO
+        // check payments
+        Assert.assertTrue(this.paymentEntityMap.containsKey(1));
+
+        PaymentEntity paymentEntity = new PaymentEntity();
+        paymentEntity.setId(1);
+        paymentEntity.setName("Payment 1");
+        Assert.assertEquals(paymentEntity, this.paymentEntityMap.get(1));
+
+        Assert.assertTrue(this.paymentEntityMap.containsKey(2));
+
+        PaymentEntity paymentEntity2 = new PaymentEntity();
+        paymentEntity2.setId(2);
+        paymentEntity2.setName("Payment 2");
+        Assert.assertEquals(paymentEntity2, this.paymentEntityMap.get(2));
+
+        // check skills
+        Assert.assertTrue(this.skillEntityMap.containsKey(1));
+
+        SkillEntity skillEntity = new SkillEntity();
+        skillEntity.setId(1);
+        skillEntity.setName("Skill 1");
+        Assert.assertEquals(skillEntity, this.skillEntityMap.get(1));
+
+        Assert.assertTrue(this.skillEntityMap.containsKey(2));
+
+        SkillEntity skillEntity2 = new SkillEntity();
+        skillEntity2.setId(2);
+        skillEntity2.setName("Skill 2");
+        Assert.assertEquals(skillEntity2, this.skillEntityMap.get(2));
+
+        // check friends
+        Assert.assertTrue(this.friendEntityMap.containsKey(1));
+        FriendEntity friendEntity = new FriendEntity();
+        friendEntity.setId(1);
+        friendEntity.setName("Friend 1");
+        friendEntity.setContact("Contact 1");
+        friendEntity.setNote("Note 1");
+        friendEntity.getPayments().add(paymentEntity2);
+        friendEntity.getPayments().add(paymentEntity);
+        friendEntity.getSkills().add(skillEntity2);
+        friendEntity.getSkills().add(skillEntity);
+        Assert.assertEquals(friendEntity, this.friendEntityMap.get(1));
+
+        Assert.assertTrue(this.friendEntityMap.containsKey(2));
+        FriendEntity friendEntity2 = new FriendEntity();
+        friendEntity2.setId(2);
+        friendEntity2.setName("Friend 2");
+        friendEntity2.setContact("Contact 2");
+        friendEntity2.setNote("Note 2");
+        friendEntity2.getPayments().add(paymentEntity2);
+        friendEntity2.getPayments().add(paymentEntity);
+        friendEntity2.getSkills().add(skillEntity2);
+        friendEntity2.getSkills().add(skillEntity);
+        Assert.assertEquals(friendEntity2, this.friendEntityMap.get(2));
     }
 
     @Test
