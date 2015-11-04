@@ -1,4 +1,4 @@
-package fa35.group1.model;
+package fa35.group2.model;
 
 
 import fa35.group1.model.xml.XmlMarshaller;

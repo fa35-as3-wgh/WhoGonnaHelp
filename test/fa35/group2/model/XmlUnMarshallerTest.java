@@ -1,9 +1,6 @@
-package fa35.group1.model;
+package fa35.group2.model;
 
 import fa35.group2.model.xml.XmlMarshaller;
-import fa35.group2.model.FriendEntity;
-import fa35.group2.model.PaymentEntity;
-import fa35.group2.model.SkillEntity;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
