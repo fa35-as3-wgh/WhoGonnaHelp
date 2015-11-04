@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Schema for xml persistence -->
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="persistence" type="persistenceType"/>
+    <xs:complexType name="skillsType" mixed="true">
+        <xs:sequence>
+            <xs:element type="skillType" name="skill" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="friendType">
+        <xs:choice maxOccurs="unbounded" minOccurs="0">
+            <xs:element type="skillsType" name="skills"/>
+            <xs:element type="paymentsType" name="payments"/>
+        </xs:choice>
+        <xs:attribute type="xs:positiveInteger" name="friend_id" use="required"/>
+        <xs:attribute type="xs:string" name="name" use="optional"/>
+        <xs:attribute type="xs:string" name="contact" use="optional"/>
+        <xs:attribute type="xs:string" name="note" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="skillType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute type="xs:positiveInteger" name="skill_id" use="required"/>
+                <xs:attribute type="xs:string" name="name" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="persistenceType">
+        <xs:sequence maxOccurs="unbounded" minOccurs="0">
+            <xs:choice maxOccurs="unbounded" minOccurs="0">
+                <xs:element type="skillsType" name="skills"/>
+                <xs:element type="paymentsType" name="payments"/>
+            </xs:choice>
+            <xs:element type="friendsType" name="friends"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="name"/>
+    </xs:complexType>
+    <xs:complexType name="friendsType">
+        <xs:sequence>
+            <xs:element type="friendType" name="friend" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="paymentsType" mixed="true">
+        <xs:sequence>
+            <xs:element type="paymentType" name="payment" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="paymentType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute type="xs:positiveInteger" name="payment_id" use="required"/>
+                <xs:attribute type="xs:string" name="name" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+</xs:schema>
