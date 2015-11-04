@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>fa35.group1</groupId>
+    <groupId>fa35.group2</groupId>
     <artifactId>WhoGonnaHelp</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
-        <project.build.creator>FA35 Group 1</project.build.creator>
+        <project.build.creator>FA35 Group 2</project.build.creator>
     </properties>
 
     <licenses>
@@ -92,7 +92,7 @@
                         </manifest>
                         <manifestEntries>
                             <mode>Created-By</mode>
-                            <key>FA35 Group 1</key>
+                            <key>FA35 Group 2</key>
                         </manifestEntries>
                     </archive>
                     <outputDirectory>package</outputDirectory>
