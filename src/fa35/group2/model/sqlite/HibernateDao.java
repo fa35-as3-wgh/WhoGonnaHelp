@@ -1,4 +1,4 @@
-package fa35.group1.model.sqlite;
+package fa35.group2.model.sqlite;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
@@ -36,7 +36,7 @@ public class HibernateDao {
 
         properties.put("hibernate.connection.driver_class", "org.sqlite.JDBC");
         properties.put("hibernate.connection.url", "jdbc:sqlite:" + SQLITE_FILE);
-        properties.put("hibernate.dialect", "fa35.group1.model.sqlite.SqliteDialect");
+        properties.put("hibernate.dialect", "fa35.group2.model.sqlite.SqliteDialect");
         properties.put("hibernate.c3p0.min_size", CONNECTIONS);
         properties.put("hibernate.c3p0.max_size", CONNECTIONS);
         properties.put("hibernate.c3p0.max_statements", "50");

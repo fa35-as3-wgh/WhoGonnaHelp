@@ -1,13 +1,12 @@
-package fa35.group1.model;
+package fa35.group2.model;
 
 import javax.persistence.*;
 
-@Entity(name = "skill")
-@NamedQuery(name = "skill.get", query = "SELECT c FROM skill c")
-public class SkillEntity {
-
+@Entity(name = "payment")
+@NamedQuery(name = "payment.get", query = "SELECT c FROM payment c")
+public class PaymentEntity {
     @Id
-    @Column(name = "skill_id")
+    @Column(name = "payment_id")
     @GeneratedValue
     private int id;
 
@@ -31,8 +30,9 @@ public class SkillEntity {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof SkillEntity) {
-            SkillEntity other = (SkillEntity) obj;
+        if (obj instanceof PaymentEntity) {
+            PaymentEntity other = (PaymentEntity) obj;
+
             return (this.getId() == other.getId()) &&
                     ((this.getName() == null && other.getName() == null) ||
                             (this.getName() != null && this.getName().equals(other.getName())));

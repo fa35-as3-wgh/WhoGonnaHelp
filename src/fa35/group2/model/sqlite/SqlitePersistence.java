@@ -1,9 +1,9 @@
-package fa35.group1.model.sqlite;
+package fa35.group2.model.sqlite;
 
-import fa35.group1.model.FriendEntity;
-import fa35.group1.model.IPersistence;
-import fa35.group1.model.PaymentEntity;
-import fa35.group1.model.SkillEntity;
+import fa35.group2.model.FriendEntity;
+import fa35.group2.model.IPersistence;
+import fa35.group2.model.PaymentEntity;
+import fa35.group2.model.SkillEntity;
 
 import java.util.List;
 
