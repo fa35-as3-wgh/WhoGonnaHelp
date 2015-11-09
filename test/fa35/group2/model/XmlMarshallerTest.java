@@ -1,7 +1,7 @@
 package fa35.group2.model;
 
 
-import fa35.group1.model.xml.XmlMarshaller;
+import fa35.group2.model.xml.XmlMarshaller;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
