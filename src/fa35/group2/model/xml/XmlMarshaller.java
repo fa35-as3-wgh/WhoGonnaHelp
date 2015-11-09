@@ -58,7 +58,7 @@ public class XmlMarshaller {
         try {
             String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
             SchemaFactory factory = SchemaFactory.newInstance(language);
-            Schema schema = factory.newSchema(XmlMarshaller.class.getResource("/fa35/group1/model/xml/schema.xsd"));
+            Schema schema = factory.newSchema(XmlMarshaller.class.getResource("/fa35/group2/model/xml/schema.xsd"));
 
             DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
             documentBuilderFactory.setSchema(schema);
