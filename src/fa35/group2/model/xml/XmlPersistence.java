@@ -1,6 +1,9 @@
 package fa35.group2.model.xml;
 
 import fa35.group2.model.*;
+import fa35.group2.model.entities.FriendEntity;
+import fa35.group2.model.entities.PaymentEntity;
+import fa35.group2.model.entities.SkillEntity;
 import org.xml.sax.SAXException;
 
 import javax.xml.transform.TransformerException;

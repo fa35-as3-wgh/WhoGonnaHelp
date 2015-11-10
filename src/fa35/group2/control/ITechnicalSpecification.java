@@ -1,8 +1,8 @@
 package fa35.group2.control;
 
-import fa35.group2.model.FriendEntity;
-import fa35.group2.model.PaymentEntity;
-import fa35.group2.model.SkillEntity;
+import fa35.group2.model.entities.FriendEntity;
+import fa35.group2.model.entities.PaymentEntity;
+import fa35.group2.model.entities.SkillEntity;
 
 import java.util.List;
 import java.util.Map;

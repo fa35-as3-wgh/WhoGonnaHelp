@@ -1,5 +1,8 @@
 package fa35.group2.model;
 
+import fa35.group2.model.entities.FriendEntity;
+import fa35.group2.model.entities.PaymentEntity;
+import fa35.group2.model.entities.SkillEntity;
 import fa35.group2.model.xml.XmlMarshaller;
 import org.junit.Assert;
 import org.junit.Before;

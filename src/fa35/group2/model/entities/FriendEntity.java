@@ -1,4 +1,4 @@
-package fa35.group2.model;
+package fa35.group2.model.entities;
 
 import javax.persistence.*;
 import java.util.ArrayList;

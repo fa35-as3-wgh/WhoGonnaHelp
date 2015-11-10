@@ -1,7 +1,7 @@
 package fa35.group2.control.technicalspecification2;
 
-import fa35.group2.model.FriendEntity;
-import fa35.group2.model.SkillEntity;
+import fa35.group2.model.entities.FriendEntity;
+import fa35.group2.model.entities.SkillEntity;
 
 import java.util.ArrayList;
 import java.util.Collections;

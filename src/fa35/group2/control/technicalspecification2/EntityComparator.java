@@ -1,6 +1,6 @@
 package fa35.group2.control.technicalspecification2;
 
-import fa35.group2.model.IEntity;
+import fa35.group2.model.entities.IEntity;
 
 import java.util.Comparator;
 
