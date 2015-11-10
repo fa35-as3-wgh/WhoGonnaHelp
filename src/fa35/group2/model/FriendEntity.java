@@ -9,7 +9,7 @@ import java.util.List;
         @NamedQuery(name = "friend.getAll", query = "SELECT c FROM friend c"),
         @NamedQuery(name = "friend.get", query = "SELECT c FROM friend c WHERE c.id = :id")
 })
-public class FriendEntity {
+public class FriendEntity implements IEntity{
     @Id
     @Column(name = "friend_id")
     @GeneratedValue

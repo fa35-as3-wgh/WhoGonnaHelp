@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity(name = "payment")
 @NamedQuery(name = "payment.get", query = "SELECT c FROM payment c")
-public class PaymentEntity {
+public class PaymentEntity implements IEntity{
     @Id
     @Column(name = "payment_id")
     @GeneratedValue

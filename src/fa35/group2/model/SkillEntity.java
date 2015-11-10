@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity(name = "skill")
 @NamedQuery(name = "skill.get", query = "SELECT c FROM skill c")
-public class SkillEntity {
+public class SkillEntity implements IEntity{
 
     @Id
     @Column(name = "skill_id")
