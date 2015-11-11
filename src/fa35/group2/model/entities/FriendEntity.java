@@ -1,5 +1,8 @@
 package fa35.group2.model.entities;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +35,8 @@ public class FriendEntity implements IEntity{
             joinColumns = {@JoinColumn(name = "friend_id")},
             inverseJoinColumns = {@JoinColumn(name = "payment_id")})
     private List<PaymentEntity> payments = new ArrayList<PaymentEntity>();
+
+    private final BooleanProperty on = new SimpleBooleanProperty();
 
     public int getId() {
         return id;
@@ -71,6 +76,15 @@ public class FriendEntity implements IEntity{
 
     public List<PaymentEntity> getPayments() {
         return payments;
+    }
+
+    public final BooleanProperty onProperty() {
+        return this.on;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 
     @Override

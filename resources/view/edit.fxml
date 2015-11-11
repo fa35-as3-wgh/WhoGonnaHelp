@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fa35.group2.view.gui.EditController">
+    <children>
+        <ListView id="e_friends" fx:id="friends" layoutX="9.0" layoutY="78.0" onMouseClicked="#get_details" prefHeight="352.0" prefWidth="208.0" />
+        <TextArea id="e_address" fx:id="friend_address" layoutX="242.0" layoutY="79.0" prefHeight="148.0" prefWidth="178.0" />
+        <TextArea id="e_notes" fx:id="friend_notes" layoutX="444.0" layoutY="79.0" prefHeight="147.0" prefWidth="178.0" />
+        <ListView id="e_skills" fx:id="friend_skills" layoutX="242.0" layoutY="263.0" prefHeight="165.0" prefWidth="178.0" />
+        <ListView id="e_payment" fx:id="friend_payment" layoutX="444.0" layoutY="264.0" prefHeight="164.0" prefWidth="178.0" />
+        <Text layoutX="9.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Freunde">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Text>
+        <Text layoutX="242.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kontakt">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Text>
+        <Text layoutX="444.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Notizen">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Text>
+        <Text layoutX="242.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fähigkeiten">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Text>
+        <Text layoutX="444.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bezahlung">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Text>
+        <TextField id="e_searchfield" fx:id="multiinsert" layoutX="9.0" layoutY="14.0" prefHeight="25.0" prefWidth="208.0" promptText="Name / ID Finden" />
+        <Button id="e_add_button" fx:id="add_btn" layoutX="356.0" layoutY="14.0" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" mnemonicParsing="false" onAction="#add_friend"  prefHeight="25.0" prefWidth="100.0" text="Hinzufügen" />
+        <Button id="e_search_button" fx:id="delete_btn" layoutX="242.0" layoutY="14.0" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" mnemonicParsing="false" onAction="#del_selection" prefHeight="25.0" prefWidth="100.0" text="Löschen" />
+        <Button id="e_save_button" fx:id="save_btn" layoutX="470.0" layoutY="14.0" maxHeight="25.0" maxWidth="100.0" minHeight="25.0" minWidth="100.0" mnemonicParsing="false" onAction="#save_friend" prefHeight="25.0" prefWidth="100.0" text="Speichern" />
+    </children>
+</AnchorPane>
