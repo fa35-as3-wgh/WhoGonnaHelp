@@ -31,7 +31,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
     @Test
     public void test_of_method_getAllFriendsIdAndName_returns_correct_list()
     {
-        List<FriendEntity> friendEntities = new ArrayList<FriendEntity>();
+        List<FriendEntity> friendEntities = new ArrayList<>();
         FriendEntity friend1 = new FriendEntity();
         friend1.setId(1);
         friend1.setName("Berta");
