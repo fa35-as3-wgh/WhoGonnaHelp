@@ -23,6 +23,14 @@ public interface ITechnicalSpecification
 
     FriendEntity updateFriend(FriendEntity friend);
 
+    FriendEntity addSkillToFriend(FriendEntity friendEntity, int id);
+
+    FriendEntity removeSkillFromFriend(FriendEntity friendEntity, int id);
+
+    FriendEntity addPaymentToFriend(FriendEntity friendEntity, int id);
+
+    FriendEntity removePaymentFromFriend(FriendEntity friendEntity, int id);
+
     void removeFriend(int id);
 
     List<SkillEntity> getAllSkills();

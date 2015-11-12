@@ -111,6 +111,54 @@ public class TechnicalSpecification1 implements ITechnicalSpecification
     }
 
     @Override
+    public FriendEntity addSkillToFriend(FriendEntity friendEntity, int skillId)
+    {
+        for (SkillEntity skillEntity : friendEntity.getSkills()) {
+            if (skillEntity.getId() == skillId) {
+                friendEntity.getSkills().add(skillEntity);
+            }
+        }
+
+        return friendEntity;
+    }
+
+    @Override
+    public FriendEntity removeSkillFromFriend(FriendEntity friendEntity, int skillId)
+    {
+        for (SkillEntity skillEntity : friendEntity.getSkills()) {
+            if (skillEntity.getId() == skillId) {
+                friendEntity.getSkills().remove(skillEntity);
+            }
+        }
+
+        return friendEntity;
+    }
+
+    @Override
+    public FriendEntity addPaymentToFriend(FriendEntity friendEntity, int paymentId)
+    {
+        for (PaymentEntity paymentEntity : friendEntity.getPayments()) {
+            if (paymentEntity.getId() == paymentId) {
+                friendEntity.getPayments().add(paymentEntity);
+            }
+        }
+
+        return friendEntity;
+    }
+
+    @Override
+    public FriendEntity removePaymentFromFriend(FriendEntity friendEntity, int paymentId)
+    {
+        for (PaymentEntity paymentEntity : friendEntity.getPayments()) {
+            if (paymentEntity.getId() == paymentId) {
+                friendEntity.getPayments().remove(paymentEntity);
+            }
+        }
+
+        return friendEntity;
+    }
+
+    @Override
     public void removeFriend(int id)
     {
         FriendEntity friendEntity = persistence.getFriend(id);
