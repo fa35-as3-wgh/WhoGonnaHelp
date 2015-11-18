@@ -62,11 +62,7 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
     @Override
     public FriendEntity createFriend(String name)
     {
-        FriendEntity friendEntity = new FriendEntity();
-        friendEntity.setName(name);
-        persistence.createFriend(friendEntity);
-
-        return friendEntity;
+        return persistence.createFriend(name);
     }
 
     @Override
@@ -139,13 +135,9 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
     }
 
     @Override
-    public SkillEntity createSkill(String skill)
+    public SkillEntity createSkill(String name)
     {
-        SkillEntity skillEntity = new SkillEntity();
-        skillEntity.setName(skill);
-        persistence.createSkill(skillEntity);
-
-        return skillEntity;
+        return persistence.createSkill(name);
     }
 
     @Override
@@ -173,13 +165,9 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
     }
 
     @Override
-    public PaymentEntity createPayment(String payment)
+    public PaymentEntity createPayment(String name)
     {
-        PaymentEntity paymentEntity = new PaymentEntity();
-        paymentEntity.setName(payment);
-        persistence.createPayment(paymentEntity);
-
-        return paymentEntity;
+        return persistence.createPayment(name);
     }
 
     @Override

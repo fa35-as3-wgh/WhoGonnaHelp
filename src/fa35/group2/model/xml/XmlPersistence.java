@@ -48,20 +48,21 @@ public class XmlPersistence implements IPersistence, IResetable {
     }
 
     @Override
-    public FriendEntity createFriend(FriendEntity friend) {
-
+    public FriendEntity createFriend(String name) {
+        FriendEntity friendEntity = new FriendEntity();
+        friendEntity.setName(name);
         int newId = getNextKey(this.friendEntityMap.keySet());
 
-        friend.setId(newId);
-        return updateFriend(friend);
+        friendEntity.setId(newId);
+        return updateFriend(friendEntity);
     }
 
     @Override
-    public FriendEntity updateFriend(FriendEntity friend) {
+    public FriendEntity updateFriend(FriendEntity friendEntity) {
 
-        this.friendEntityMap.put(friend.getId(), friend);
+        this.friendEntityMap.put(friendEntity.getId(), friendEntity);
 
-        friend.getPayments().forEach(paymentEntity -> {
+        friendEntity.getPayments().forEach(paymentEntity -> {
             if (paymentEntity.getId() == 0) {
                 int newId = getNextKey(this.paymentEntityMap.keySet());
 
@@ -70,7 +71,7 @@ public class XmlPersistence implements IPersistence, IResetable {
             }
         });
 
-        friend.getSkills().forEach(skillEntity -> {
+        friendEntity.getSkills().forEach(skillEntity -> {
             if (skillEntity.getId() == 0) {
                 int newId = getNextKey(this.skillEntityMap.keySet());
 
@@ -81,12 +82,12 @@ public class XmlPersistence implements IPersistence, IResetable {
 
         persist();
 
-        return friend;
+        return friendEntity;
     }
 
     @Override
-    public void removeFriend(FriendEntity friend) {
-        this.friendEntityMap.remove(friend.getId());
+    public void removeFriend(FriendEntity friendEntity) {
+        this.friendEntityMap.remove(friendEntity.getId());
         persist();
     }
 
@@ -96,7 +97,9 @@ public class XmlPersistence implements IPersistence, IResetable {
     }
 
     @Override
-    public SkillEntity createSkill(SkillEntity skillEntity) {
+    public SkillEntity createSkill(String name) {
+        SkillEntity skillEntity = new SkillEntity();
+        skillEntity.setName(name);
         int newId = getNextKey(this.skillEntityMap.keySet());
 
         skillEntity.setId(newId);
@@ -123,7 +126,9 @@ public class XmlPersistence implements IPersistence, IResetable {
     }
 
     @Override
-    public PaymentEntity createPayment(PaymentEntity paymentEntity) {
+    public PaymentEntity createPayment(String name) {
+        PaymentEntity paymentEntity = new PaymentEntity();
+        paymentEntity.setName(name);
         int newId = getNextKey(this.paymentEntityMap.keySet());
 
         paymentEntity.setId(newId);
