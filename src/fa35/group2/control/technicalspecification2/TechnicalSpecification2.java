@@ -87,7 +87,10 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
     {
         for (SkillEntity skillEntity : friendEntity.getSkills()) {
             if (skillEntity.getId() == skillId) {
-                friendEntity.getSkills().add(skillEntity);
+                if (!friendEntity.getSkills().contains(skillEntity))
+                {
+                    friendEntity.getSkills().add(skillEntity);
+                }
             }
         }
 
@@ -111,7 +114,9 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
     {
         for (PaymentEntity paymentEntity : friendEntity.getPayments()) {
             if (paymentEntity.getId() == paymentId) {
-                friendEntity.getPayments().add(paymentEntity);
+                if (!friendEntity.getPayments().contains(paymentEntity)) {
+                    friendEntity.getPayments().add(paymentEntity);
+                }
             }
         }
 
