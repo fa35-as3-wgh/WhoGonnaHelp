@@ -30,18 +30,20 @@ public class SqlitePersistence implements IPersistence, IResetable {
     }
 
     @Override
-    public FriendEntity createFriend(FriendEntity friend) {
-        return this.dao.insert(friend);
+    public FriendEntity createFriend(String name) {
+        FriendEntity friendEntity = new FriendEntity();
+        friendEntity.setName(name);
+        return this.dao.insert(friendEntity);
     }
 
     @Override
-    public FriendEntity updateFriend(FriendEntity friend) {
-        return this.dao.update(friend);
+    public FriendEntity updateFriend(FriendEntity friendEntity) {
+        return this.dao.update(friendEntity);
     }
 
     @Override
-    public void removeFriend(FriendEntity friend) {
-        this.dao.remove(friend);
+    public void removeFriend(FriendEntity friendEntity) {
+        this.dao.remove(friendEntity);
     }
 
     @Override
@@ -50,7 +52,9 @@ public class SqlitePersistence implements IPersistence, IResetable {
     }
 
     @Override
-    public SkillEntity createSkill(SkillEntity skillEntity) {
+    public SkillEntity createSkill(String name) {
+        SkillEntity skillEntity = new SkillEntity();
+        skillEntity.setName(name);
         return this.dao.insert(skillEntity);
     }
 
@@ -65,7 +69,9 @@ public class SqlitePersistence implements IPersistence, IResetable {
     }
 
     @Override
-    public PaymentEntity createPayment(PaymentEntity paymentEntity) {
+    public PaymentEntity createPayment(String name) {
+        PaymentEntity paymentEntity = new PaymentEntity();
+        paymentEntity.setName(name);
         return this.dao.insert(paymentEntity);
     }
 

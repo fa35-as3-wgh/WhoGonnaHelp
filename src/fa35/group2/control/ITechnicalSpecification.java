@@ -35,13 +35,13 @@ public interface ITechnicalSpecification
 
     List<SkillEntity> getAllSkills();
 
-    SkillEntity createSkill(String skill);
+    SkillEntity createSkill(String name);
 
     void removeSkills(List<Integer> ids);
 
     List<PaymentEntity> getAllPayments();
 
-    PaymentEntity createPayment(String payment);
+    PaymentEntity createPayment(String name);
 
     void removePayments(List<Integer> ids);
 }

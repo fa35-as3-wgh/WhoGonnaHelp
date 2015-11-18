@@ -15,7 +15,7 @@ public interface IPersistence {
 
     FriendEntity getFriend(int id); // alle Daten
 
-    FriendEntity createFriend(FriendEntity friend);
+    FriendEntity createFriend(String name);
 
     FriendEntity updateFriend(FriendEntity friend);
 
@@ -24,14 +24,14 @@ public interface IPersistence {
     // Fertigkeiten
     List<SkillEntity> getAllSkills();
 
-    SkillEntity createSkill(SkillEntity skillEntity);
+    SkillEntity createSkill(String name);
 
     void removeSkill(SkillEntity skillEntity);
 
     // Bezahlungen
     List<PaymentEntity> getAllPayments();
 
-    PaymentEntity createPayment(PaymentEntity paymentEntity);
+    PaymentEntity createPayment(String name);
 
     void removePayment(PaymentEntity paymentEntity);
 }
