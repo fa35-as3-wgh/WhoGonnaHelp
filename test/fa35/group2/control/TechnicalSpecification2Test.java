@@ -1,6 +1,6 @@
 package fa35.group2.control;
 
-import fa35.group2.control.technicalspecification1.TechnicalSpecification1;
+import fa35.group2.control.technicalspecification2.TechnicalSpecification2;
 import fa35.group2.model.IPersistence;
 import fa35.group2.model.entities.FriendEntity;
 import fa35.group2.model.entities.PaymentEntity;
@@ -17,9 +17,9 @@ import java.util.Map;
 
 import static org.easymock.EasyMock.*;
 
-public class TechnicalSpecificationTest extends EasyMockSupport
+public class TechnicalSpecification2Test extends EasyMockSupport
 {
-    private TechnicalSpecification1 technicalSpecification1;
+    private TechnicalSpecification2 technicalSpecification1;
 
     private IPersistence persistenceMock;
 
@@ -51,7 +51,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
     public void setUp()
     {
         this.persistenceMock = mock(IPersistence.class);
-        this.technicalSpecification1 = new TechnicalSpecification1(persistenceMock);
+        this.technicalSpecification1 = new TechnicalSpecification2(persistenceMock);
     }
 
     public void createPayments()
