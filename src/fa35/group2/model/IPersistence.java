@@ -1,5 +1,9 @@
 package fa35.group2.model;
 
+import fa35.group2.model.entities.FriendEntity;
+import fa35.group2.model.entities.PaymentEntity;
+import fa35.group2.model.entities.SkillEntity;
+
 import java.util.List;
 
 public interface IPersistence {
@@ -11,9 +15,9 @@ public interface IPersistence {
     boolean initializePersistence(boolean test);
 
     // Freunde
-    List<FriendEntity> getAllFriends(); // nur id und name
+    List<FriendEntity> getAllFriends();
 
-    FriendEntity getFriend(int id); // alle Daten
+    FriendEntity getFriend(int id);
 
     FriendEntity createFriend(FriendEntity friend);
 

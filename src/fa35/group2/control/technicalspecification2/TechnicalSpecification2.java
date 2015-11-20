@@ -1,10 +1,10 @@
 package fa35.group2.control.technicalspecification2;
 
 import fa35.group2.control.ITechnicalSpecification;
-import fa35.group2.model.FriendEntity;
+import fa35.group2.model.entities.FriendEntity;
 import fa35.group2.model.IPersistence;
-import fa35.group2.model.PaymentEntity;
-import fa35.group2.model.SkillEntity;
+import fa35.group2.model.entities.PaymentEntity;
+import fa35.group2.model.entities.SkillEntity;
 
 import java.util.List;
 import java.util.Map;
@@ -85,7 +85,7 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
     @Override
     public FriendEntity addSkillToFriend(FriendEntity friendEntity, int skillId)
     {
-        for (SkillEntity skillEntity : friendEntity.getSkills()) {
+        for (SkillEntity skillEntity : persistence.getAllSkills()) {
             if (skillEntity.getId() == skillId) {
                 if (!friendEntity.getSkills().contains(skillEntity))
                 {
@@ -94,7 +94,7 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
             }
         }
 
-        return friendEntity;
+        return persistence.updateFriend(friendEntity);
     }
 
     @Override
@@ -106,13 +106,13 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
             }
         }
 
-        return friendEntity;
+        return persistence.updateFriend(friendEntity);
     }
 
     @Override
     public FriendEntity addPaymentToFriend(FriendEntity friendEntity, int paymentId)
     {
-        for (PaymentEntity paymentEntity : friendEntity.getPayments()) {
+        for (PaymentEntity paymentEntity : persistence.getAllPayments()) {
             if (paymentEntity.getId() == paymentId) {
                 if (!friendEntity.getPayments().contains(paymentEntity)) {
                     friendEntity.getPayments().add(paymentEntity);
@@ -120,7 +120,7 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
             }
         }
 
-        return friendEntity;
+        return persistence.updateFriend(friendEntity);
     }
 
     @Override
@@ -132,7 +132,7 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
             }
         }
 
-        return friendEntity;
+        return persistence.updateFriend(friendEntity);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package fa35.group2.control;
 
 import fa35.group2.control.technicalspecification1.TechnicalSpecification1;
-import fa35.group2.model.FriendEntity;
+import fa35.group2.model.entities.FriendEntity;
 import fa35.group2.model.IPersistence;
 import org.easymock.EasyMockSupport;
 import org.junit.Assert;

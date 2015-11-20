@@ -1,10 +1,10 @@
 package fa35.group2.control.technicalspecification1;
 
 import fa35.group2.control.ITechnicalSpecification;
-import fa35.group2.model.FriendEntity;
+import fa35.group2.model.entities.FriendEntity;
 import fa35.group2.model.IPersistence;
-import fa35.group2.model.PaymentEntity;
-import fa35.group2.model.SkillEntity;
+import fa35.group2.model.entities.PaymentEntity;
+import fa35.group2.model.entities.SkillEntity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -113,7 +113,7 @@ public class TechnicalSpecification1 implements ITechnicalSpecification
     @Override
     public FriendEntity addSkillToFriend(FriendEntity friendEntity, int skillId)
     {
-        for (SkillEntity skillEntity : friendEntity.getSkills()) {
+        for (SkillEntity skillEntity : persistence.getAllSkills()) {
             if (skillEntity.getId() == skillId) {
                 if (!friendEntity.getSkills().contains(skillEntity)) {
                     friendEntity.getSkills().add(skillEntity);
@@ -121,25 +121,26 @@ public class TechnicalSpecification1 implements ITechnicalSpecification
             }
         }
 
-        return friendEntity;
+        return persistence.updateFriend(friendEntity);
     }
 
     @Override
     public FriendEntity removeSkillFromFriend(FriendEntity friendEntity, int skillId)
     {
-        for (SkillEntity skillEntity : friendEntity.getSkills()) {
+        List<SkillEntity> paymentEntities = friendEntity.getSkills();
+        for (SkillEntity skillEntity : paymentEntities) {
             if (skillEntity.getId() == skillId) {
                 friendEntity.getSkills().remove(skillEntity);
             }
         }
 
-        return friendEntity;
+        return persistence.updateFriend(friendEntity);
     }
 
     @Override
     public FriendEntity addPaymentToFriend(FriendEntity friendEntity, int paymentId)
     {
-        for (PaymentEntity paymentEntity : friendEntity.getPayments()) {
+        for (PaymentEntity paymentEntity : persistence.getAllPayments()) {
             if (paymentEntity.getId() == paymentId) {
                 if (!friendEntity.getPayments().contains(paymentEntity)) {
                     friendEntity.getPayments().add(paymentEntity);
@@ -147,19 +148,20 @@ public class TechnicalSpecification1 implements ITechnicalSpecification
             }
         }
 
-        return friendEntity;
+        return persistence.updateFriend(friendEntity);
     }
 
     @Override
     public FriendEntity removePaymentFromFriend(FriendEntity friendEntity, int paymentId)
     {
-        for (PaymentEntity paymentEntity : friendEntity.getPayments()) {
+        List<PaymentEntity> paymentEntities = friendEntity.getPayments();
+        for (PaymentEntity paymentEntity : paymentEntities) {
             if (paymentEntity.getId() == paymentId) {
                 friendEntity.getPayments().remove(paymentEntity);
             }
         }
 
-        return friendEntity;
+        return persistence.updateFriend(friendEntity);
     }
 
     @Override
