@@ -23,8 +23,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class XmlMarshaller {
 
@@ -117,7 +115,7 @@ public class XmlMarshaller {
                 payment.setAttributeNode(attr);
 
                 attr = this.document.createAttribute("name");
-                attr.setValue(escapeXml(entity.getName()));
+                attr.setValue(entity.getName());
                 payment.setAttributeNode(attr);
 
                 payments.appendChild(payment);
@@ -140,7 +138,7 @@ public class XmlMarshaller {
                 skill.setAttributeNode(attr);
 
                 attr = this.document.createAttribute("name");
-                attr.setValue(escapeXml(entity.getName()));
+                attr.setValue(entity.getName());
                 skill.setAttributeNode(attr);
 
                 skills.appendChild(skill);
@@ -163,15 +161,15 @@ public class XmlMarshaller {
                 friend.setAttributeNode(attr);
 
                 attr = this.document.createAttribute("name");
-                attr.setValue(escapeXml(entity.getName()));
+                attr.setValue(entity.getName());
                 friend.setAttributeNode(attr);
 
                 attr = this.document.createAttribute("contact");
-                attr.setValue(escapeXml(entity.getContact()));
+                attr.setValue(entity.getContact());
                 friend.setAttributeNode(attr);
 
                 attr = this.document.createAttribute("note");
-                attr.setValue(escapeXml(entity.getNote()));
+                attr.setValue(entity.getNote());
                 friend.setAttributeNode(attr);
 
                 friend.appendChild(marshalFriendPayments(entity.getPayments()));
@@ -292,7 +290,7 @@ public class XmlMarshaller {
                         int id = Integer.parseInt(idString);
                         PaymentEntity paymentEntity = new PaymentEntity();
                         paymentEntity.setId(id);
-                        paymentEntity.setName(unescapeXml(attributes.getNamedItem("name").getTextContent()));
+                        paymentEntity.setName(attributes.getNamedItem("name").getTextContent());
 
                         this.paymentEntityMap.put(id, paymentEntity);
                     }
@@ -314,7 +312,7 @@ public class XmlMarshaller {
                         int id = Integer.parseInt(idString);
                         SkillEntity skillEntity = new SkillEntity();
                         skillEntity.setId(id);
-                        skillEntity.setName(unescapeXml(attributes.getNamedItem("name").getTextContent()));
+                        skillEntity.setName(attributes.getNamedItem("name").getTextContent());
 
                         this.skillEntityMap.put(id, skillEntity);
                     }
@@ -336,9 +334,9 @@ public class XmlMarshaller {
                         int id = Integer.parseInt(idString);
                         FriendEntity friendEntity = new FriendEntity();
                         friendEntity.setId(id);
-                        friendEntity.setName(unescapeXml(attributes.getNamedItem("name").getTextContent()));
-                        friendEntity.setContact(unescapeXml(attributes.getNamedItem("contact").getTextContent()));
-                        friendEntity.setNote(unescapeXml(attributes.getNamedItem("note").getTextContent()));
+                        friendEntity.setName(attributes.getNamedItem("name").getTextContent());
+                        friendEntity.setContact(attributes.getNamedItem("contact").getTextContent());
+                        friendEntity.setNote(attributes.getNamedItem("note").getTextContent());
 
                         NodeList friendChildren = friend.getChildNodes();
                         for (int childIndex = 0; childIndex < friendChildren.getLength(); childIndex++) {
@@ -417,94 +415,5 @@ public class XmlMarshaller {
             this.document = documentBuilder.parse(file);
             this.document.normalize();
         } else throw new NullPointerException("File is null");
-    }
-
-    private String escapeXml(String text) {
-        if (text == null)
-            return null;
-
-        StringBuffer result = new StringBuffer();
-        text.chars().mapToObj(value -> (char) value).forEach(character -> {
-            switch (character) {
-                case '<':
-                    result.append("&lt;");
-                    break;
-                case '>':
-                    result.append("&gt;");
-                    break;
-                case '&':
-                    result.append("&amp;");
-                    break;
-                case '\'':
-                    result.append("&apos;");
-                    break;
-                case '\"':
-                    result.append("&quot;");
-                    break;
-                case '\t':
-                    result.append("&#x9;");
-                    break;
-                case '\n':
-                    result.append("&#xA;");
-                    break;
-                case '\r':
-                    result.append("&#xD;");
-                    break;
-                default:
-                    if (character > 0x7e) {
-                        result.append("&#" + ((int) character) + ";");
-                    } else
-                        result.append(character);
-            }
-        });
-        return result.toString();
-    }
-
-    private String unescapeXml(String text) {
-        if (text == null)
-            return null;
-
-        Pattern xmlEntityRegex = Pattern.compile("&(#?)([^;]+);");
-        StringBuffer unescapedOutput = new StringBuffer(text.length());
-
-        Matcher m = xmlEntityRegex.matcher(text);
-        String entity;
-        String hashmark;
-        String ent;
-        int code;
-        while (m.find()) {
-            ent = m.group(2);
-            hashmark = m.group(1);
-            if (hashmark != null && hashmark.length() > 0) {
-                code = Integer.parseInt(ent);
-                entity = Character.toString((char) code);
-            } else {
-                switch (ent) {
-                    case "&lt;":
-                        entity = "<";
-                        break;
-                    case "&gt;":
-                        entity = ">";
-                        break;
-                    case "&amp;":
-                        entity = "&";
-                        break;
-                    case "&apos;":
-                        entity = "\'";
-                        break;
-                    case "&quot;":
-                        entity = "\"";
-                        break;
-                    default:
-                        //not a known entity - ignore it
-                        entity = "&" + ent + ';';
-                        break;
-                }
-            }
-            m.appendReplacement(unescapedOutput, entity);
-        }
-        m.appendTail(unescapedOutput);
-
-        return unescapedOutput.toString();
     }
 }
