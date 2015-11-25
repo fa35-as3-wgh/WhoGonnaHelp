@@ -64,7 +64,7 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
     {
         FriendEntity friendEntity = new FriendEntity();
         friendEntity.setName(name);
-        persistence.createFriend(friendEntity);
+        friendEntity = persistence.createFriend(friendEntity);
 
         return friendEntity;
     }
@@ -148,7 +148,7 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
     {
         SkillEntity skillEntity = new SkillEntity();
         skillEntity.setName(skill);
-        persistence.createSkill(skillEntity);
+        skillEntity = persistence.createSkill(skillEntity);
 
         return skillEntity;
     }
@@ -182,7 +182,7 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
     {
         PaymentEntity paymentEntity = new PaymentEntity();
         paymentEntity.setName(payment);
-        persistence.createPayment(paymentEntity);
+        paymentEntity = persistence.createPayment(paymentEntity);
 
         return paymentEntity;
     }
