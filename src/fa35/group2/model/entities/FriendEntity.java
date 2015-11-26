@@ -12,7 +12,7 @@ import java.util.List;
 public class FriendEntity implements IEntity{
     @Id
     @Column(name = "friend_id")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;
