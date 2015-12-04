@@ -110,8 +110,7 @@ public class Tui
         List<FriendEntity> friendEntities = this.technicalSpecification.getAllFriends();
         this.friendSubmenuPrints.printChooseFriendForChange(friendEntities);
         boolean hasFriendChoosed = this.chooseFriendForChange();
-        if (!hasFriendChoosed)
-        {
+        if (!hasFriendChoosed) {
             return 2;
         }
         this.menuPrints.printFriendSubmenuChange();
@@ -124,13 +123,14 @@ public class Tui
         this.skillSubmenuPrints.printSkillSubmenuAdd();
         String line = this.tuiHelper.readLine();
 
-        if (!line.isEmpty()) {
-            SkillEntity skill = technicalSpecification.createSkill(line);
-            this.printHelper.printIdAndName(skill);
-            return 3;
+        if (null == line) {
+            return 0;
         }
 
-        return 0;
+        SkillEntity skill = technicalSpecification.createSkill(line);
+        this.printHelper.printIdAndName(skill);
+
+        return 25;
     }
 
     public Integer skillSubmenuSelectionDelete()
@@ -179,7 +179,13 @@ public class Tui
     public Integer friendSubmenuSelectionAdd()
     {
         this.friendSubmenuPrints.printFriendSubmenuAdd();
-        FriendEntity friend = technicalSpecification.createFriend(this.tuiHelper.readLine());
+        String line = this.tuiHelper.readLine();
+
+        if (null == line) {
+            return 0;
+        }
+
+        FriendEntity friend = technicalSpecification.createFriend(line);
         this.printHelper.printIdAndName(friend);
 
         return 25;
@@ -245,7 +251,13 @@ public class Tui
     public Integer paymentSubmenuSelectionAdd()
     {
         this.paymentSubmenuPrints.printPaymentSubmenuAdd();
-        PaymentEntity payment = technicalSpecification.createPayment(this.tuiHelper.readLine());
+        String line = this.tuiHelper.readLine();
+
+        if (null == line) {
+            return 0;
+        }
+
+        PaymentEntity payment = technicalSpecification.createPayment(line);
         this.printHelper.printIdAndName(payment);
 
         return 25;
@@ -480,6 +492,6 @@ public class Tui
     {
         this.printHelper.printEmptyImputForAbortion();
 
-        return this.menuMapper.verifyMainMenuChoose(this.tuiHelper.readLine());
+        return this.menuMapper.verifyMainMenuChoose(this.tuiHelper.readLineWaiting());
     }
 }

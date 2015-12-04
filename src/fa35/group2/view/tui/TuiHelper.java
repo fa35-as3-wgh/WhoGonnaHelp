@@ -23,11 +23,30 @@ public class TuiHelper
         String line;
         try {
             if ((line = reader.readLine()) != null) {
+                if (line.isEmpty())
+                {
+                    return null;
+                }
                 return line;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return null;
+    }
+
+    public String readLineWaiting()
+    {
+        String line;
+        try {
+            if ((line = reader.readLine()) != null) {
+                return line;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return "";
     }
 
