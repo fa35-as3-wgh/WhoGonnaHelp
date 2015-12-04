@@ -2,6 +2,7 @@ package fa35.group2.model.sqlite;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -15,6 +16,8 @@ public class HibernateDao {
 
     private static final int CONNECTIONS = 1;
     private static final String SQLITE_FILE = "db.sqlite";
+    private static final String SQLITE_TEST_FILE = "test_db.sqlite";
+    private static final String INIT_SQLITE_PATH = "/fa35/group2/model/sqlite/init.sqlite";
     private static final String PERSISTENCE_NAME = "who_gonna_help";
     private static final String PERSISTENCE_TEST_NAME = "who_gonna_help_test";
 
@@ -36,11 +39,50 @@ public class HibernateDao {
         Map<String, Object> properties = new HashMap<String, Object>();
 
         properties.put("hibernate.connection.driver_class", "org.sqlite.JDBC");
-        properties.put("hibernate.connection.url", "jdbc:sqlite:" + SQLITE_FILE);
+        properties.put("hibernate.connection.url", "jdbc:sqlite:" + (test ? SQLITE_TEST_FILE : SQLITE_FILE));
         properties.put("hibernate.dialect", "fa35.group2.model.sqlite.SqliteDialect");
         properties.put("hibernate.c3p0.min_size", CONNECTIONS);
         properties.put("hibernate.c3p0.max_size", CONNECTIONS);
         properties.put("hibernate.c3p0.max_statements", "50");
+
+        System.setProperty("org.jboss.logging.provider", "log4j2");
+
+        File dbFile = new File(test ? SQLITE_TEST_FILE : SQLITE_FILE);
+        if (!dbFile.exists()) {
+            // copy initial database from jar to file system
+            InputStream inputStream = null;
+            OutputStream outputStream = null;
+
+            try {
+                inputStream = HibernateDao.class.getResourceAsStream(HibernateDao.INIT_SQLITE_PATH);
+                outputStream = new FileOutputStream(dbFile);
+
+                int read;
+                byte[] buffer = new byte[65535];
+
+                while ((read = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, read);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (inputStream != null) {
+                    try {
+                        inputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (outputStream != null) {
+                    try {
+                        // outputStream.flush();
+                        outputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
 
         this.entityManagerFactory = Persistence.createEntityManagerFactory(test ? PERSISTENCE_TEST_NAME : PERSISTENCE_NAME, properties);
 

@@ -8,7 +8,7 @@ public class SkillEntity implements IEntity{
 
     @Id
     @Column(name = "skill_id")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     private String name;

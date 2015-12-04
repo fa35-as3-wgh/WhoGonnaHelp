@@ -1,21 +1,15 @@
 package fa35.group2.view.tui;
 
-import fa35.group2.view.tui.selectiontypes.IFinalMainMenuSelectionShort;
-import fa35.group2.view.tui.selectiontypes.IFinalSubmenuSelectionCharacter;
-
-public class StateMachine
-{
+public class StateMachine {
     private Tui tui;
 
     private int state = 0;
 
-    public StateMachine(Tui tui)
-    {
+    public StateMachine(Tui tui) {
         this.tui = tui;
     }
 
-    public void stateMachine()
-    {
+    public void stateMachine() {
         boolean running = true;
 
         while (running) {
@@ -127,5 +121,8 @@ public class StateMachine
                     break;
             }
         }
+
+        // force exit of program!
+        System.exit(0);
     }
 }

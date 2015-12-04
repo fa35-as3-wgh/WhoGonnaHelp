@@ -174,7 +174,7 @@ public class TechnicalSpecification1 implements ITechnicalSpecification
     {
         SkillEntity skillEntity = new SkillEntity();
         skillEntity.setName(skill);
-        persistence.createSkill(skillEntity);
+        skillEntity = persistence.createSkill(skillEntity);
 
         return skillEntity;
     }
@@ -208,7 +208,7 @@ public class TechnicalSpecification1 implements ITechnicalSpecification
     {
         PaymentEntity paymentEntity = new PaymentEntity();
         paymentEntity.setName(payment);
-        persistence.createPayment(paymentEntity);
+        paymentEntity = persistence.createPayment(paymentEntity);
 
         return paymentEntity;
     }
