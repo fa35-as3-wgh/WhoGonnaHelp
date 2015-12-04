@@ -24,7 +24,7 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
     @Override
     public List<FriendEntity> getAllFriends()
     {
-        List friendEntities = persistence.getAllFriends();
+        List friendEntities = persistence.getAllEntities(FriendEntity.class);
 
         return technicalSpecificationService.sortingByName(friendEntities);
     }
@@ -32,7 +32,7 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
     @Override
     public Map<Integer, String> getAllFriendsIdAndName()
     {
-        List friendEntities = persistence.getAllFriends();
+        List friendEntities = persistence.getAllEntities(FriendEntity.class);
 
         return technicalSpecificationService.sortedFriendsWithIdAndName(friendEntities);
     }
@@ -40,7 +40,7 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
     @Override
     public List<FriendEntity> getAllFriendsBySkill(int id)
     {
-        List friendEntities = persistence.getAllFriends();
+        List friendEntities = persistence.getAllEntities(FriendEntity.class);
 
         return technicalSpecificationService.sortedFriendsBySkill(id, friendEntities);
     }
@@ -54,7 +54,7 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
     @Override
     public FriendEntity getFriendByName(String name)
     {
-        List<FriendEntity> friendEntities = persistence.getAllFriends();
+        List<FriendEntity> friendEntities = persistence.getAllEntities(FriendEntity.class);
 
         return technicalSpecificationService.friendByName(name, friendEntities);
     }
@@ -64,7 +64,7 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
     {
         FriendEntity friendEntity = new FriendEntity();
         friendEntity.setName(name);
-        persistence.createFriend(friendEntity);
+        persistence.createEntity(friendEntity, FriendEntity.class);
 
         return friendEntity;
     }
@@ -79,13 +79,13 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
     public void removeFriend(int id)
     {
         FriendEntity friendEntity = persistence.getFriend(id);
-        persistence.removeFriend(friendEntity);
+        persistence.removeEntity(friendEntity);
     }
 
     @Override
     public FriendEntity addSkillToFriend(FriendEntity friendEntity, int skillId)
     {
-        for (SkillEntity skillEntity : persistence.getAllSkills()) {
+        for (SkillEntity skillEntity : persistence.getAllEntities(SkillEntity.class)) {
             if (skillEntity.getId() == skillId) {
                 if (!friendEntity.getSkills().contains(skillEntity))
                 {
@@ -112,7 +112,7 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
     @Override
     public FriendEntity addPaymentToFriend(FriendEntity friendEntity, int paymentId)
     {
-        for (PaymentEntity paymentEntity : persistence.getAllPayments()) {
+        for (PaymentEntity paymentEntity : persistence.getAllEntities(PaymentEntity.class)) {
             if (paymentEntity.getId() == paymentId) {
                 if (!friendEntity.getPayments().contains(paymentEntity)) {
                     friendEntity.getPayments().add(paymentEntity);
@@ -138,7 +138,7 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
     @Override
     public List<SkillEntity> getAllSkills()
     {
-        List skillEntities = persistence.getAllSkills();
+        List skillEntities = persistence.getAllEntities(SkillEntity.class);
 
         return technicalSpecificationService.sortingByName(skillEntities);
     }
@@ -148,7 +148,7 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
     {
         SkillEntity skillEntity = new SkillEntity();
         skillEntity.setName(skill);
-        persistence.createSkill(skillEntity);
+        persistence.createEntity(skillEntity, SkillEntity.class);
 
         return skillEntity;
     }
@@ -156,13 +156,13 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
     @Override
     public void removeSkills(List<Integer> ids)
     {
-        List<SkillEntity> skillEntities = persistence.getAllSkills();
+        List<SkillEntity> skillEntities = persistence.getAllEntities(SkillEntity.class);
 
         if (null != skillEntities) {
             for (SkillEntity skillEntity : skillEntities) {
                 for (int id : ids) {
                     if (id == skillEntity.getId()) {
-                        persistence.removeSkill(skillEntity);
+                        persistence.removeEntity(skillEntity);
                     }
                 }
             }
@@ -172,7 +172,7 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
     @Override
     public List<PaymentEntity> getAllPayments()
     {
-        List paymentEntities = persistence.getAllPayments();
+        List paymentEntities = persistence.getAllEntities(PaymentEntity.class);
 
         return technicalSpecificationService.sortingByName(paymentEntities);
     }
@@ -182,7 +182,7 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
     {
         PaymentEntity paymentEntity = new PaymentEntity();
         paymentEntity.setName(payment);
-        persistence.createPayment(paymentEntity);
+        persistence.createEntity(paymentEntity, PaymentEntity.class);
 
         return paymentEntity;
     }
@@ -190,13 +190,13 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
     @Override
     public void removePayments(List<Integer> ids)
     {
-        List<PaymentEntity> paymentEntities = persistence.getAllPayments();
+        List<PaymentEntity> paymentEntities = persistence.getAllEntities(PaymentEntity.class);
 
         if (null != paymentEntities) {
             for (PaymentEntity paymentEntity : paymentEntities) {
                 for (int id : ids) {
                     if (id == paymentEntity.getId()) {
-                        persistence.removePayment(paymentEntity);
+                        persistence.removeEntity(paymentEntity);
                     }
                 }
             }

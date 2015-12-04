@@ -28,6 +28,7 @@ public class TuiHelper
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return "";
     }
 

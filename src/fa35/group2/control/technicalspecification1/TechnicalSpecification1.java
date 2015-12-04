@@ -23,7 +23,7 @@ public class TechnicalSpecification1 implements ITechnicalSpecification
     @Override
     public List<FriendEntity> getAllFriends()
     {
-        List<FriendEntity> friendEntities = persistence.getAllFriends();
+        List<FriendEntity> friendEntities = persistence.getAllEntities(FriendEntity.class);
 
         return friendEntities;
     }
@@ -32,7 +32,7 @@ public class TechnicalSpecification1 implements ITechnicalSpecification
     public Map<Integer, String> getAllFriendsIdAndName()
     {
         Map<Integer, String> friendList = new HashMap<>();
-        List<FriendEntity> friendEntities = persistence.getAllFriends();
+        List<FriendEntity> friendEntities = persistence.getAllEntities(FriendEntity.class);
 
         for (FriendEntity friendEntity : friendEntities) {
             friendList.put(friendEntity.getId(), friendEntity.getName());
@@ -45,7 +45,7 @@ public class TechnicalSpecification1 implements ITechnicalSpecification
     public List<FriendEntity> getAllFriendsBySkill(int skillId)
     {
         List<FriendEntity> friendList = new ArrayList<>();
-        List<FriendEntity> friendEntities = persistence.getAllFriends();
+        List<FriendEntity> friendEntities = persistence.getAllEntities(FriendEntity.class);
 
         for (FriendEntity friendEntity : friendEntities) {
             for (SkillEntity skillEntity : friendEntity.getSkills()) {
@@ -67,7 +67,7 @@ public class TechnicalSpecification1 implements ITechnicalSpecification
     @Override
     public FriendEntity getFriendByName(String name)
     {
-        List<FriendEntity> friendEntities = persistence.getAllFriends();
+        List<FriendEntity> friendEntities = persistence.getAllEntities(FriendEntity.class);
 
         for (FriendEntity friendEntity : friendEntities) {
             if (friendEntity.getName().equals(name)) {
@@ -83,7 +83,7 @@ public class TechnicalSpecification1 implements ITechnicalSpecification
     {
         FriendEntity friendEntity = new FriendEntity();
         friendEntity.setName(name);
-        friendEntity = persistence.createFriend(friendEntity);
+        friendEntity = persistence.createEntity(friendEntity, FriendEntity.class);
 
         return friendEntity;
     }
@@ -97,7 +97,7 @@ public class TechnicalSpecification1 implements ITechnicalSpecification
     @Override
     public FriendEntity addSkillToFriend(FriendEntity friendEntity, int skillId)
     {
-        List<SkillEntity> skillEntities = persistence.getAllSkills();
+        List<SkillEntity> skillEntities = persistence.getAllEntities(SkillEntity.class);
 
         for (SkillEntity skillEntity : skillEntities) {
             if (skillEntity.getId() == skillId) {
@@ -113,7 +113,7 @@ public class TechnicalSpecification1 implements ITechnicalSpecification
     @Override
     public FriendEntity removeSkillFromFriend(FriendEntity friendEntity, int skillId)
     {
-        List<SkillEntity> skillEntities = friendEntity.getSkills();
+        List<SkillEntity> skillEntities = persistence.getAllEntities(SkillEntity.class);
 
         for (SkillEntity skillEntity : skillEntities) {
             if (skillEntity.getId() == skillId) {
@@ -127,7 +127,7 @@ public class TechnicalSpecification1 implements ITechnicalSpecification
     @Override
     public FriendEntity addPaymentToFriend(FriendEntity friendEntity, int paymentId)
     {
-        List<PaymentEntity> paymentEntities = persistence.getAllPayments();
+        List<PaymentEntity> paymentEntities = persistence.getAllEntities(PaymentEntity.class);
 
         for (PaymentEntity paymentEntity : paymentEntities) {
             if (paymentEntity.getId() == paymentId) {
@@ -143,7 +143,7 @@ public class TechnicalSpecification1 implements ITechnicalSpecification
     @Override
     public FriendEntity removePaymentFromFriend(FriendEntity friendEntity, int paymentId)
     {
-        List<PaymentEntity> paymentEntities = friendEntity.getPayments();
+        List<PaymentEntity> paymentEntities = persistence.getAllEntities(PaymentEntity.class);
 
         for (PaymentEntity paymentEntity : paymentEntities) {
             if (paymentEntity.getId() == paymentId) {
@@ -158,13 +158,13 @@ public class TechnicalSpecification1 implements ITechnicalSpecification
     public void removeFriend(int id)
     {
         FriendEntity friendEntity = persistence.getFriend(id);
-        persistence.removeFriend(friendEntity);
+        persistence.removeEntity(friendEntity);
     }
 
     @Override
     public List<SkillEntity> getAllSkills()
     {
-        List<SkillEntity> skillEntities = persistence.getAllSkills();
+        List<SkillEntity> skillEntities = persistence.getAllEntities(SkillEntity.class);
 
         return skillEntities;
     }
@@ -174,7 +174,7 @@ public class TechnicalSpecification1 implements ITechnicalSpecification
     {
         SkillEntity skillEntity = new SkillEntity();
         skillEntity.setName(skill);
-        persistence.createSkill(skillEntity);
+        persistence.createEntity(skillEntity, SkillEntity.class);
 
         return skillEntity;
     }
@@ -182,13 +182,13 @@ public class TechnicalSpecification1 implements ITechnicalSpecification
     @Override
     public void removeSkills(List<Integer> ids)
     {
-        List<SkillEntity> skillEntities = persistence.getAllSkills();
+        List<SkillEntity> skillEntities = persistence.getAllEntities(SkillEntity.class);
 
         if (null != skillEntities) {
             for (SkillEntity skillEntity : skillEntities) {
                 for (int id : ids) {
                     if (id == skillEntity.getId()) {
-                        persistence.removeSkill(skillEntity);
+                        persistence.removeEntity(skillEntity);
                     }
                 }
             }
@@ -198,7 +198,7 @@ public class TechnicalSpecification1 implements ITechnicalSpecification
     @Override
     public List<PaymentEntity> getAllPayments()
     {
-        List<PaymentEntity> paymentEntities = persistence.getAllPayments();
+        List<PaymentEntity> paymentEntities = persistence.getAllEntities(PaymentEntity.class);
 
         return paymentEntities;
     }
@@ -208,7 +208,7 @@ public class TechnicalSpecification1 implements ITechnicalSpecification
     {
         PaymentEntity paymentEntity = new PaymentEntity();
         paymentEntity.setName(payment);
-        persistence.createPayment(paymentEntity);
+        persistence.createEntity(paymentEntity, SkillEntity.class);
 
         return paymentEntity;
     }
@@ -216,13 +216,13 @@ public class TechnicalSpecification1 implements ITechnicalSpecification
     @Override
     public void removePayments(List<Integer> ids)
     {
-        List<PaymentEntity> paymentEntities = persistence.getAllPayments();
+        List<PaymentEntity> paymentEntities = persistence.getAllEntities(PaymentEntity.class);
 
         if (null != paymentEntities) {
             for (PaymentEntity paymentEntity : paymentEntities) {
                 for (int id : ids) {
                     if (id == paymentEntity.getId()) {
-                        persistence.removePayment(paymentEntity);
+                        persistence.removeEntity(paymentEntity);
                     }
                 }
             }

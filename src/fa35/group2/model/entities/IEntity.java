@@ -5,4 +5,6 @@ public interface IEntity
     public String getName();
 
     public int getId();
+
+    public void setId(int id);
 }

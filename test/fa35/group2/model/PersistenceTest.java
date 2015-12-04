@@ -31,12 +31,12 @@ public class PersistenceTest {
         System.out.println("|- createPayments");
         PaymentEntity entity = new PaymentEntity();
         entity.setName("TestPayment1");
-        entity = persistence.createPayment(entity);
+        entity = persistence.createEntity(entity, PaymentEntity.class);
         payments.add(entity);
 
         entity = new PaymentEntity();
         entity.setName("TestPayment2");
-        entity = persistence.createPayment(entity);
+        entity = persistence.createEntity(entity, PaymentEntity.class);
         payments.add(entity);
     }
 
@@ -45,12 +45,12 @@ public class PersistenceTest {
 
         SkillEntity entity = new SkillEntity();
         entity.setName("TestSkill1");
-        entity = persistence.createSkill(entity);
+        entity = persistence.createEntity(entity, SkillEntity.class);
         skills.add(entity);
 
         entity = new SkillEntity();
         entity.setName("TestSkill2");
-        entity = persistence.createSkill(entity);
+        entity = persistence.createEntity(entity, SkillEntity.class);
         skills.add(entity);
     }
 
@@ -73,7 +73,7 @@ public class PersistenceTest {
         entity.setNote("TestNote1");
         entity.getPayments().addAll(payments);
         entity.getSkills().addAll(skills);
-        entity = persistence.createFriend(entity);
+        entity = persistence.createEntity(entity, FriendEntity.class);
         friends.add(entity);
 
         entity = new FriendEntity();
@@ -82,7 +82,7 @@ public class PersistenceTest {
         entity.setNote("TestNote2");
         entity.getPayments().addAll(payments);
         entity.getSkills().addAll(skills);
-        entity = persistence.createFriend(entity);
+        entity = persistence.createEntity(entity, FriendEntity.class);
         friends.add(entity);
     }
 
@@ -119,7 +119,7 @@ public class PersistenceTest {
     public void testPaymentGetAll() {
         System.out.println("-> testPaymentGetAll");
         // get all payment entities
-        List<PaymentEntity> paymentEntities = persistence.getAllPayments();
+        List<PaymentEntity> paymentEntities = persistence.getAllEntities(PaymentEntity.class);
 
         // check if query result is not null
         Assert.assertNotNull(paymentEntities);
@@ -133,7 +133,7 @@ public class PersistenceTest {
     public void testSkillGetAll() {
         System.out.println("-> testSkillGetAll");
         // get all skill entities
-        List<SkillEntity> skillEntities = persistence.getAllSkills();
+        List<SkillEntity> skillEntities = persistence.getAllEntities(SkillEntity.class);
 
         // check if query result is not null
         Assert.assertNotNull(skillEntities);
@@ -147,7 +147,7 @@ public class PersistenceTest {
     public void testFriendGetAll() {
         System.out.println("-> testFriendGetAll");
         // get all friend entities
-        List<FriendEntity> friendEntities = persistence.getAllFriends();
+        List<FriendEntity> friendEntities = persistence.getAllEntities(FriendEntity.class);
 
         // check if query result is not null
         Assert.assertNotNull(friendEntities);
@@ -219,11 +219,11 @@ public class PersistenceTest {
         Assert.assertEquals(expectedFriend, friendEntity);
 
         // check if payment added
-        List<PaymentEntity> paymentEntities = persistence.getAllPayments();
+        List<PaymentEntity> paymentEntities = persistence.getAllEntities(PaymentEntity.class);
         Assert.assertEquals(payments, paymentEntities);
 
         // check if skill added
-        List<SkillEntity> skillEntities = persistence.getAllSkills();
+        List<SkillEntity> skillEntities = persistence.getAllEntities(SkillEntity.class);
         Assert.assertEquals(skills, skillEntities);
     }
 
@@ -267,10 +267,10 @@ public class PersistenceTest {
         friends.forEach(friendEntity -> Assert.assertFalse(friendEntity.getPayments().contains(paymentEntity)));
 
         // remove payment
-        persistence.removePayment(paymentEntity);
+        persistence.removeEntity(paymentEntity);
 
         // check if payments not contains removed payment
-        List<PaymentEntity> paymentEntities = persistence.getAllPayments();
+        List<PaymentEntity> paymentEntities = persistence.getAllEntities(PaymentEntity.class);
         Assert.assertNotNull(paymentEntities);
         Assert.assertFalse(paymentEntities.contains(paymentEntity));
 
@@ -278,7 +278,7 @@ public class PersistenceTest {
         Assert.assertEquals(payments, paymentEntities);
 
         // check if friend's payments not contains removed payment
-        List<FriendEntity> friendEntities = persistence.getAllFriends();
+        List<FriendEntity> friendEntities = persistence.getAllEntities(FriendEntity.class);
         Assert.assertNotNull(friendEntities);
         friendEntities.forEach(friendEntity -> Assert.assertFalse(friendEntity.getPayments().contains(paymentEntity)));
 
@@ -303,10 +303,10 @@ public class PersistenceTest {
         friends.forEach(friendEntity -> Assert.assertFalse(friendEntity.getSkills().contains(skillEntity)));
 
         // remove skill
-        persistence.removeSkill(skillEntity);
+        persistence.removeEntity(skillEntity);
 
         // check if skills not contains removed skill
-        List<SkillEntity> skillEntities = persistence.getAllSkills();
+        List<SkillEntity> skillEntities = persistence.getAllEntities(SkillEntity.class);
         Assert.assertNotNull(skillEntities);
         Assert.assertFalse(skillEntities.contains(skillEntity));
 
@@ -314,7 +314,7 @@ public class PersistenceTest {
         Assert.assertEquals(skills, skillEntities);
 
         // check if friend's skills not contains removed skill
-        List<FriendEntity> friendEntities = persistence.getAllFriends();
+        List<FriendEntity> friendEntities = persistence.getAllEntities(FriendEntity.class);
         Assert.assertNotNull(friendEntities);
         friendEntities.forEach(friendEntity -> Assert.assertFalse(friendEntity.getSkills().contains(skillEntity)));
 
@@ -335,10 +335,10 @@ public class PersistenceTest {
         Assert.assertFalse(friends.contains(friendEntity));
 
         // remove friend
-        persistence.removeFriend(friendEntity);
+        persistence.removeEntity(friendEntity);
 
         // check if friends is removed from friends
-        List<FriendEntity> friendEntities = persistence.getAllFriends();
+        List<FriendEntity> friendEntities = persistence.getAllEntities(FriendEntity.class);
         Assert.assertFalse(friendEntities.contains(friendEntity));
 
         // check if friends equals expected

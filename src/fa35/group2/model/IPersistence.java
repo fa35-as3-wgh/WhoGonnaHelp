@@ -1,6 +1,7 @@
 package fa35.group2.model;
 
 import fa35.group2.model.entities.FriendEntity;
+import fa35.group2.model.entities.IEntity;
 import fa35.group2.model.entities.PaymentEntity;
 import fa35.group2.model.entities.SkillEntity;
 
@@ -14,28 +15,13 @@ public interface IPersistence {
 
     boolean initializePersistence(boolean test);
 
-    // Freunde
-    List<FriendEntity> getAllFriends();
-
     FriendEntity getFriend(int id);
-
-    FriendEntity createFriend(FriendEntity friend);
 
     FriendEntity updateFriend(FriendEntity friend);
 
-    void removeFriend(FriendEntity friend);
+    <T extends IEntity> T createEntity(IEntity entity, Class<T> type);
 
-    // Fertigkeiten
-    List<SkillEntity> getAllSkills();
+    void removeEntity(IEntity entity);
 
-    SkillEntity createSkill(SkillEntity skillEntity);
-
-    void removeSkill(SkillEntity skillEntity);
-
-    // Bezahlungen
-    List<PaymentEntity> getAllPayments();
-
-    PaymentEntity createPayment(PaymentEntity paymentEntity);
-
-    void removePayment(PaymentEntity paymentEntity);
+    <T extends IEntity> List<T> getAllEntities(Class<T> type);
 }

@@ -1,7 +1,9 @@
 package fa35.group2.model.xml;
 
-import fa35.group2.model.*;
+import fa35.group2.model.IPersistence;
+import fa35.group2.model.IResetable;
 import fa35.group2.model.entities.FriendEntity;
+import fa35.group2.model.entities.IEntity;
 import fa35.group2.model.entities.PaymentEntity;
 import fa35.group2.model.entities.SkillEntity;
 import org.xml.sax.SAXException;
@@ -9,22 +11,30 @@ import org.xml.sax.SAXException;
 import javax.xml.transform.TransformerException;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.OptionalInt;
+import java.util.Set;
+import java.util.TreeMap;
 
-public class XmlPersistence implements IPersistence, IResetable {
-
+public class XmlPersistence implements IPersistence, IResetable
+{
     private static final String FILE_NAME = "db.xml";
+
     private static final String FILE_TEST_NAME = "test_db.xml";
 
     private Map<Integer, PaymentEntity> paymentEntityMap;
+
     private Map<Integer, SkillEntity> skillEntityMap;
+
     private Map<Integer, FriendEntity> friendEntityMap;
 
     private boolean test;
 
     @Override
-    public boolean initializePersistence(boolean test) {
-
+    public boolean initializePersistence(boolean test)
+    {
         this.test = test;
 
         this.paymentEntityMap = new TreeMap<Integer, PaymentEntity>();
@@ -41,46 +51,87 @@ public class XmlPersistence implements IPersistence, IResetable {
     }
 
     @Override
-    public List<FriendEntity> getAllFriends() {
-        return new ArrayList<FriendEntity>(this.friendEntityMap.values());
+    public <T extends IEntity> List<T> getAllEntities(Class<T> type)
+    {
+        List myList;
+
+        if (type == FriendEntity.class) {
+            myList = new ArrayList<FriendEntity>(this.friendEntityMap.values());
+            return myList;
+        }
+
+        if (type == SkillEntity.class) {
+            myList = new ArrayList<SkillEntity>(this.skillEntityMap.values());
+            return myList;
+        }
+
+        if (type == PaymentEntity.class) {
+            myList = new ArrayList<PaymentEntity>(this.paymentEntityMap.values());
+            return myList;
+        }
+
+        return new ArrayList<>();
     }
 
     @Override
-    public FriendEntity getFriend(int id) {
+    public FriendEntity getFriend(int id)
+    {
         return this.friendEntityMap.get(id);
     }
 
     @Override
-    public FriendEntity createFriend(FriendEntity friend) {
+    public <T extends IEntity> T createEntity(IEntity entity, Class<T> type)
+    {
+        int newId = -1;
 
-        int newId = getNextKey(this.friendEntityMap.keySet());
+        if (entity instanceof FriendEntity) {
+            newId = getNextKey(this.friendEntityMap.keySet());
+            this.friendEntityMap.put(newId, (FriendEntity) entity);
+        }
 
-        friend.setId(newId);
-        return updateFriend(friend);
+        if (entity instanceof SkillEntity) {
+            newId = getNextKey(this.skillEntityMap.keySet());
+            this.skillEntityMap.put(newId, (SkillEntity) entity);
+        }
+
+        if (entity instanceof PaymentEntity) {
+            newId = getNextKey(this.paymentEntityMap.keySet());
+            this.paymentEntityMap.put(newId, (PaymentEntity) entity);
+        }
+
+        entity.setId(newId);
+        persist();
+
+        return type.cast(entity);
     }
 
     @Override
-    public FriendEntity updateFriend(FriendEntity friend) {
+    public FriendEntity updateFriend(FriendEntity friend)
+    {
 
         this.friendEntityMap.put(friend.getId(), friend);
 
-        friend.getPayments().forEach(paymentEntity -> {
-            if (paymentEntity.getId() == 0) {
-                int newId = getNextKey(this.paymentEntityMap.keySet());
+        friend.getPayments().forEach(
+            paymentEntity -> {
+                if (paymentEntity.getId() == 0) {
+                    int newId = getNextKey(this.paymentEntityMap.keySet());
 
-                paymentEntity.setId(newId);
-                this.paymentEntityMap.put(newId, paymentEntity);
+                    paymentEntity.setId(newId);
+                    this.paymentEntityMap.put(newId, paymentEntity);
+                }
             }
-        });
+        );
 
-        friend.getSkills().forEach(skillEntity -> {
-            if (skillEntity.getId() == 0) {
-                int newId = getNextKey(this.skillEntityMap.keySet());
+        friend.getSkills().forEach(
+            skillEntity -> {
+                if (skillEntity.getId() == 0) {
+                    int newId = getNextKey(this.skillEntityMap.keySet());
 
-                skillEntity.setId(newId);
-                this.skillEntityMap.put(newId, skillEntity);
+                    skillEntity.setId(newId);
+                    this.skillEntityMap.put(newId, skillEntity);
+                }
             }
-        });
+        );
 
         persist();
 
@@ -88,66 +139,37 @@ public class XmlPersistence implements IPersistence, IResetable {
     }
 
     @Override
-    public void removeFriend(FriendEntity friend) {
-        this.friendEntityMap.remove(friend.getId());
-        persist();
-    }
+    public void removeEntity(IEntity entity)
+    {
+        if (entity instanceof FriendEntity) {
+            this.friendEntityMap.remove(entity.getId());
+        }
 
-    @Override
-    public List<SkillEntity> getAllSkills() {
-        return new ArrayList<SkillEntity>(this.skillEntityMap.values());
-    }
+        if (entity instanceof SkillEntity) {
+            this.skillEntityMap.remove(entity.getId());
 
-    @Override
-    public SkillEntity createSkill(SkillEntity skillEntity) {
-        int newId = getNextKey(this.skillEntityMap.keySet());
+            this.friendEntityMap.forEach(
+                (integer, friendEntity) -> {
+                    friendEntity.getSkills().remove(entity);
+                }
+            );
+        }
 
-        skillEntity.setId(newId);
-        this.skillEntityMap.put(newId, skillEntity);
-        persist();
+        if (entity instanceof PaymentEntity) {
+            this.paymentEntityMap.remove(entity.getId());
 
-        return skillEntity;
-    }
-
-    @Override
-    public void removeSkill(SkillEntity skillEntity) {
-        this.skillEntityMap.remove(skillEntity.getId());
-
-        this.friendEntityMap.forEach((integer, friendEntity) -> {
-            friendEntity.getSkills().remove(skillEntity);
-        });
+            this.friendEntityMap.forEach(
+                (integer, friendEntity) -> {
+                    friendEntity.getPayments().remove(entity);
+                }
+            );
+        }
 
         persist();
     }
 
-    @Override
-    public List<PaymentEntity> getAllPayments() {
-        return new ArrayList<PaymentEntity>(this.paymentEntityMap.values());
-    }
-
-    @Override
-    public PaymentEntity createPayment(PaymentEntity paymentEntity) {
-        int newId = getNextKey(this.paymentEntityMap.keySet());
-
-        paymentEntity.setId(newId);
-        this.paymentEntityMap.put(newId, paymentEntity);
-        persist();
-
-        return paymentEntity;
-    }
-
-    @Override
-    public void removePayment(PaymentEntity paymentEntity) {
-        this.paymentEntityMap.remove(paymentEntity.getId());
-
-        this.friendEntityMap.forEach((integer, friendEntity) -> {
-            friendEntity.getPayments().remove(paymentEntity);
-        });
-
-        persist();
-    }
-
-    private int getNextKey(Set<Integer> keySet) {
+    private int getNextKey(Set<Integer> keySet)
+    {
         if (keySet != null) {
             OptionalInt highestKey = keySet.stream().mapToInt(i -> i).max();
             if (highestKey.isPresent()) {
@@ -157,7 +179,8 @@ public class XmlPersistence implements IPersistence, IResetable {
         return 1;
     }
 
-    private boolean load(File file) {
+    private boolean load(File file)
+    {
         XmlMarshaller marshaller = new XmlMarshaller(this.paymentEntityMap, this.skillEntityMap, this.friendEntityMap);
         try {
             marshaller.load(file);
@@ -169,7 +192,8 @@ public class XmlPersistence implements IPersistence, IResetable {
         }
     }
 
-    private void persist() {
+    private void persist()
+    {
         XmlMarshaller marshaller = new XmlMarshaller(this.paymentEntityMap, this.skillEntityMap, this.friendEntityMap);
         try {
             marshaller.marshal();
@@ -179,7 +203,8 @@ public class XmlPersistence implements IPersistence, IResetable {
         }
     }
 
-    public void reset() {
+    public void reset()
+    {
         this.paymentEntityMap = new TreeMap<Integer, PaymentEntity>();
         this.skillEntityMap = new TreeMap<Integer, SkillEntity>();
         this.friendEntityMap = new TreeMap<Integer, FriendEntity>();

@@ -120,7 +120,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
         expected.add(this.friendEntity);
         expected.add(this.friendEntity2);
 
-        expect(persistenceMock.getAllFriends()).andReturn(this.friends);
+        expect(persistenceMock.getAllEntities(FriendEntity.class)).andReturn(this.friends);
         replay(persistenceMock);
 
         List<FriendEntity> actual = technicalSpecification1.getAllFriends();
@@ -131,7 +131,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
     public void test_of_method_getAllFriends_with_empty_friendlist()
     {
         List<FriendEntity> expected = new ArrayList<>();
-        expect(persistenceMock.getAllFriends()).andReturn(this.emptyFriendList);
+        expect(persistenceMock.getAllEntities(FriendEntity.class)).andReturn(this.emptyFriendList);
         replay(persistenceMock);
 
         List<FriendEntity> actual = technicalSpecification1.getAllFriends();
@@ -145,7 +145,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
         expected.put(1, "TestFriend1");
         expected.put(2, "TestFriend2");
 
-        expect(persistenceMock.getAllFriends()).andReturn(this.friends);
+        expect(persistenceMock.getAllEntities(FriendEntity.class)).andReturn(this.friends);
         replay(persistenceMock);
 
         Map<Integer, String> actual = technicalSpecification1.getAllFriendsIdAndName();
@@ -157,7 +157,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
     {
         Map<Integer, String> expected = new HashMap<>();
 
-        expect(persistenceMock.getAllFriends()).andReturn(this.emptyFriendList);
+        expect(persistenceMock.getAllEntities(FriendEntity.class)).andReturn(this.emptyFriendList);
         replay(persistenceMock);
 
         Map<Integer, String> actual = technicalSpecification1.getAllFriendsIdAndName();
@@ -171,7 +171,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
         expected.add(this.friendEntity);
         expected.add(this.friendEntity2);
 
-        expect(persistenceMock.getAllFriends()).andReturn(this.friends);
+        expect(persistenceMock.getAllEntities(FriendEntity.class)).andReturn(this.friends);
         replay(persistenceMock);
 
         List<FriendEntity> actual = technicalSpecification1.getAllFriendsBySkill(1);
@@ -183,7 +183,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
     {
         List<FriendEntity> expected = new ArrayList<>();
 
-        expect(persistenceMock.getAllFriends()).andReturn(this.friends);
+        expect(persistenceMock.getAllEntities(FriendEntity.class)).andReturn(this.friends);
         replay(persistenceMock);
 
         List<FriendEntity> actual = technicalSpecification1.getAllFriendsBySkill(3);
@@ -195,7 +195,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
     {
         List<FriendEntity> expected = new ArrayList<>();
 
-        expect(persistenceMock.getAllFriends()).andReturn(this.emptyFriendList);
+        expect(persistenceMock.getAllEntities(FriendEntity.class)).andReturn(this.emptyFriendList);
         replay(persistenceMock);
 
         List<FriendEntity> actual = technicalSpecification1.getAllFriendsBySkill(2);
@@ -228,7 +228,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
     public void test_of_method_getFriendByName_with_existing_name()
     {
         FriendEntity expected = this.friendEntity;
-        expect(persistenceMock.getAllFriends()).andReturn(this.friends);
+        expect(persistenceMock.getAllEntities(FriendEntity.class)).andReturn(this.friends);
         replay(persistenceMock);
 
         FriendEntity actual = technicalSpecification1.getFriendByName("TestFriend1");
@@ -239,7 +239,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
     public void test_of_method_getFriendByName_with_non_existing_name()
     {
         FriendEntity expected = null;
-        expect(persistenceMock.getAllFriends()).andReturn(this.friends);
+        expect(persistenceMock.getAllEntities(FriendEntity.class)).andReturn(this.friends);
         replay(persistenceMock);
 
         FriendEntity actual = technicalSpecification1.getFriendByName("TestFriend3");
@@ -251,7 +251,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
     {
         FriendEntity expected = null;
 
-        expect(persistenceMock.getAllFriends()).andReturn(this.emptyFriendList);
+        expect(persistenceMock.getAllEntities(FriendEntity.class)).andReturn(this.emptyFriendList);
         replay(persistenceMock);
 
         FriendEntity actual = technicalSpecification1.getFriendByName("TestFriend1");
@@ -265,7 +265,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
         expected.add(skillEntity);
         expected.add(skillEntity2);
 
-        expect(persistenceMock.getAllSkills()).andReturn(this.skills);
+        expect(persistenceMock.getAllEntities(SkillEntity.class)).andReturn(this.skills);
         expect(persistenceMock.updateFriend(this.friendEntity)).andReturn(this.friendEntity);
         replay(persistenceMock);
 
@@ -280,7 +280,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
         expected.add(skillEntity);
         expected.add(skillEntity2);
 
-        expect(persistenceMock.getAllSkills()).andReturn(this.skills);
+        expect(persistenceMock.getAllEntities(SkillEntity.class)).andReturn(this.skills);
         expect(persistenceMock.updateFriend(this.friendEntity)).andReturn(this.friendEntity);
         replay(persistenceMock);
 
@@ -295,7 +295,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
         expected.add(skillEntity);
         expected.add(skillEntity2);
 
-        expect(persistenceMock.getAllSkills()).andReturn(this.emptySkillList);
+        expect(persistenceMock.getAllEntities(SkillEntity.class)).andReturn(this.emptySkillList);
         expect(persistenceMock.updateFriend(this.friendEntity)).andReturn(this.friendEntity);
         replay(persistenceMock);
 
@@ -351,7 +351,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
         expected.add(paymentEntity);
         expected.add(paymentEntity2);
 
-        expect(persistenceMock.getAllPayments()).andReturn(this.payments);
+        expect(persistenceMock.getAllEntities(PaymentEntity.class)).andReturn(this.payments);
         expect(persistenceMock.updateFriend(this.friendEntity)).andReturn(this.friendEntity);
         replay(persistenceMock);
 
@@ -366,7 +366,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
         expected.add(paymentEntity);
         expected.add(paymentEntity2);
 
-        expect(persistenceMock.getAllPayments()).andReturn(this.payments);
+        expect(persistenceMock.getAllEntities(PaymentEntity.class)).andReturn(this.payments);
         expect(persistenceMock.updateFriend(this.friendEntity)).andReturn(this.friendEntity);
         replay(persistenceMock);
 
@@ -381,7 +381,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
         expected.add(paymentEntity);
         expected.add(paymentEntity2);
 
-        expect(persistenceMock.getAllPayments()).andReturn(this.emptyPaymentList);
+        expect(persistenceMock.getAllEntities(PaymentEntity.class)).andReturn(this.emptyPaymentList);
         expect(persistenceMock.updateFriend(this.friendEntity)).andReturn(this.friendEntity);
         replay(persistenceMock);
 
@@ -437,7 +437,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
         expected.add(this.skillEntity);
         expected.add(this.skillEntity2);
 
-        expect(persistenceMock.getAllSkills()).andReturn(this.skills);
+        expect(persistenceMock.getAllEntities(SkillEntity.class)).andReturn(this.skills);
         replay(persistenceMock);
 
         List<SkillEntity> actual = technicalSpecification1.getAllSkills();
@@ -449,7 +449,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
     {
         List<SkillEntity> expected = new ArrayList<>();
 
-        expect(persistenceMock.getAllSkills()).andReturn(this.emptySkillList);
+        expect(persistenceMock.getAllEntities(SkillEntity.class)).andReturn(this.emptySkillList);
         replay(persistenceMock);
 
         List<SkillEntity> actual = technicalSpecification1.getAllSkills();
@@ -463,7 +463,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
         expected.add(this.paymentEntity);
         expected.add(this.paymentEntity2);
 
-        expect(persistenceMock.getAllPayments()).andReturn(this.payments);
+        expect(persistenceMock.getAllEntities(PaymentEntity.class)).andReturn(this.payments);
         replay(persistenceMock);
 
         List<PaymentEntity> actual = technicalSpecification1.getAllPayments();
@@ -475,7 +475,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
     {
         List<PaymentEntity> expected = new ArrayList<>();
 
-        expect(persistenceMock.getAllPayments()).andReturn(this.emptyPaymentList);
+        expect(persistenceMock.getAllEntities(PaymentEntity.class)).andReturn(this.emptyPaymentList);
         replay(persistenceMock);
 
         List<PaymentEntity> actual = technicalSpecification1.getAllPayments();
