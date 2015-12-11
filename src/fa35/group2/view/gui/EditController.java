@@ -52,8 +52,7 @@ public class EditController
     @FXML
     void get_details(MouseEvent event)
     {
-        if (friends.getSelectionModel().getSelectedItems().get(0) != null)
-        {
+        if (friends.getSelectionModel().getSelectedItems().get(0) != null) {
             FriendEntity friend = friends.getSelectionModel().getSelectedItems().get(0);
             friend_address.setText(friend.getContact());
             friend_notes.setText(friend.getNote());
@@ -102,7 +101,7 @@ public class EditController
 
     void getMainData()
     {
-        if(technicalSpecification != null) {
+        if (technicalSpecification != null) {
             friendList = technicalSpecification.getAllFriends();
             friends.setItems(FXCollections.observableList(friendList));
             friends.setCellFactory(CheckBoxListCell.forListView(FriendEntity::onProperty));
@@ -166,7 +165,8 @@ public class EditController
         }
     }
 
-    void clearSelection(){
+    void clearSelection()
+    {
         friends.getSelectionModel().clearSelection();
         friend_notes.clear();
         friend_skills.getItems().clear();

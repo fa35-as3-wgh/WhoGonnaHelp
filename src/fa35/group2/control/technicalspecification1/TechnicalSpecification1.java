@@ -115,10 +115,8 @@ public class TechnicalSpecification1 implements ITechnicalSpecification
     {
         for (SkillEntity skillEntity : persistence.getAllSkills()) {
             if (skillEntity.getId() == skillId) {
-                for (SkillEntity friendSkillEntity : friendEntity.getSkills()) {
-                    if (friendSkillEntity.getId() == skillId) {
-                        friendEntity.getSkills().remove(skillEntity);
-                    }
+                if (friendEntity.getSkills().contains(skillEntity)) {
+                    friendEntity.getSkills().remove(skillEntity);
                 }
             }
         }
@@ -147,10 +145,8 @@ public class TechnicalSpecification1 implements ITechnicalSpecification
     {
         for (PaymentEntity paymentEntity : persistence.getAllPayments()) {
             if (paymentEntity.getId() == paymentId) {
-                for (PaymentEntity friendPaymentEntity : friendEntity.getPayments()) {
-                    if (friendPaymentEntity.getId() == paymentId) {
-                        friendEntity.getPayments().remove(paymentEntity);
-                    }
+                if (friendEntity.getPayments().contains(paymentEntity)) {
+                    friendEntity.getPayments().remove(paymentEntity);
                 }
             }
         }

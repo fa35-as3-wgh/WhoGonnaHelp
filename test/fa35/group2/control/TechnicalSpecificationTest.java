@@ -309,6 +309,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
         List<SkillEntity> expected = new ArrayList<>();
         expected.add(skillEntity2);
 
+        expect(persistenceMock.getAllSkills()).andReturn(this.skills);
         expect(persistenceMock.updateFriend(this.friendEntity)).andReturn(this.friendEntity);
         replay(persistenceMock);
 
@@ -323,6 +324,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
         expected.add(skillEntity);
         expected.add(skillEntity2);
 
+        expect(persistenceMock.getAllSkills()).andReturn(this.skills);
         expect(persistenceMock.updateFriend(this.friendEntity)).andReturn(this.friendEntity);
         replay(persistenceMock);
 
@@ -337,6 +339,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
         this.friendEntity.getSkills().removeAll(this.skills);
         this.friendEntity.getSkills().addAll(new ArrayList<>());
 
+        expect(persistenceMock.getAllSkills()).andReturn(this.skills);
         expect(persistenceMock.updateFriend(this.friendEntity)).andReturn(this.friendEntity);
         replay(persistenceMock);
 
@@ -395,6 +398,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
         List<PaymentEntity> expected = new ArrayList<>();
         expected.add(paymentEntity2);
 
+        expect(persistenceMock.getAllPayments()).andReturn(this.payments);
         expect(persistenceMock.updateFriend(this.friendEntity)).andReturn(this.friendEntity);
         replay(persistenceMock);
 
@@ -409,6 +413,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
         expected.add(paymentEntity);
         expected.add(paymentEntity2);
 
+        expect(persistenceMock.getAllPayments()).andReturn(this.payments);
         expect(persistenceMock.updateFriend(this.friendEntity)).andReturn(this.friendEntity);
         replay(persistenceMock);
 
@@ -423,6 +428,7 @@ public class TechnicalSpecificationTest extends EasyMockSupport
         this.friendEntity.getPayments().removeAll(this.payments);
         this.friendEntity.getPayments().addAll(new ArrayList<>());
 
+        expect(persistenceMock.getAllPayments()).andReturn(this.payments);
         expect(persistenceMock.updateFriend(this.friendEntity)).andReturn(this.friendEntity);
         replay(persistenceMock);
 
