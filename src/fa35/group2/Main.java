@@ -11,7 +11,7 @@ import javafx.application.Application;
 
 public class Main
 {
-//    private static final IPersistence persistence = new SqlitePersistence();
+    //    private static final IPersistence persistence = new SqlitePersistence();
     private static final IPersistence persistence = new XmlPersistence();
 
     public static void main(String[] args)
@@ -19,9 +19,7 @@ public class Main
         persistence.initializePersistence();
         Gui.launch(new TechnicalSpecification2(persistence));
 
-        //        new Tui(new TechnicalSpecification1(persistence));
-
-
+        //       new Tui(new TechnicalSpecification1(persistence));
     }
 
     public static IPersistence getPersistence()
