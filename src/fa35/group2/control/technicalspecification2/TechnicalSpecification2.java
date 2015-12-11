@@ -1,8 +1,8 @@
 package fa35.group2.control.technicalspecification2;
 
 import fa35.group2.control.ITechnicalSpecification;
-import fa35.group2.model.entities.FriendEntity;
 import fa35.group2.model.IPersistence;
+import fa35.group2.model.entities.FriendEntity;
 import fa35.group2.model.entities.PaymentEntity;
 import fa35.group2.model.entities.SkillEntity;
 
@@ -87,8 +87,7 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
     {
         for (SkillEntity skillEntity : persistence.getAllSkills()) {
             if (skillEntity.getId() == skillId) {
-                if (!friendEntity.getSkills().contains(skillEntity))
-                {
+                if (!friendEntity.getSkills().contains(skillEntity)) {
                     friendEntity.getSkills().add(skillEntity);
                 }
             }
@@ -100,9 +99,13 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
     @Override
     public FriendEntity removeSkillFromFriend(FriendEntity friendEntity, int skillId)
     {
-        for (SkillEntity skillEntity : friendEntity.getSkills()) {
+        for (SkillEntity skillEntity : persistence.getAllSkills()) {
             if (skillEntity.getId() == skillId) {
-                friendEntity.getSkills().remove(skillEntity);
+                for (SkillEntity friendSkillEntity : friendEntity.getSkills()) {
+                    if (friendSkillEntity.getId() == skillId) {
+                        friendEntity.getSkills().remove(skillEntity);
+                    }
+                }
             }
         }
 
@@ -126,9 +129,13 @@ public class TechnicalSpecification2 implements ITechnicalSpecification
     @Override
     public FriendEntity removePaymentFromFriend(FriendEntity friendEntity, int paymentId)
     {
-        for (PaymentEntity paymentEntity : friendEntity.getPayments()) {
+        for (PaymentEntity paymentEntity : persistence.getAllPayments()) {
             if (paymentEntity.getId() == paymentId) {
-                friendEntity.getPayments().remove(paymentEntity);
+                for (PaymentEntity friendPaymentEntity : friendEntity.getPayments()) {
+                    if (friendPaymentEntity.getId() == paymentId) {
+                        friendEntity.getPayments().remove(paymentEntity);
+                    }
+                }
             }
         }
 

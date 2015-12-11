@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fa35.group2.view.gui.AddDeleteController">
+    <children>
+        <Text layoutX="333.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bezahlung">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Text>
+        <Text layoutX="113.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fertigkeit">
+            <font>
+                <Font size="24.0" />
+            </font>
+        </Text>
+        <ListView id="a_payment" fx:id="payment" layoutX="333.0" layoutY="93.0" prefHeight="164.0" prefWidth="178.0" />
+        <ListView id="a_skills" fx:id="skills" layoutX="113.0" layoutY="93.0" prefHeight="165.0" prefWidth="178.0" />
+        <Button id="a_skills_del_button" fx:id="skill_delete_btn" layoutX="112.0" layoutY="268.0" mnemonicParsing="false" onAction="#del_skillSelection" text="Auswahl Löschen" />
+        <TextField id="a_skills_add_field" fx:id="add_skill" layoutX="112.0" layoutY="333.0" promptText="Fertigkeit" />
+        <Button id="a_skills_add_button" fx:id="add_skill_btn" layoutX="112.0" layoutY="367.0" mnemonicParsing="false" onAction="#create_skill" text="Hinzufügen" />
+        <Button id="a_payment_add_button" fx:id="add_payment_btn" layoutX="334.0" layoutY="367.0" mnemonicParsing="false" onAction="#create_payment" text="Hinzufügen" />
+        <TextField id="a_payment_add_field" fx:id="add_payment" layoutX="334.0" layoutY="333.0" promptText="Bezahlung" />
+        <Button id="a_payment_del_button" fx:id="payment_delete_btn" layoutX="334.0" layoutY="268.0" mnemonicParsing="false" onAction="#del_paymentSelection" text="Auswahl Löschen" />
+    </children>
+</AnchorPane>

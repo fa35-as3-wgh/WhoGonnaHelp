@@ -1,5 +1,8 @@
 package fa35.group2.model.entities;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 import javax.persistence.*;
 
 @Entity(name = "payment")
@@ -11,6 +14,8 @@ public class PaymentEntity implements IEntity{
     private int id;
 
     private String name;
+
+    private final BooleanProperty on = new SimpleBooleanProperty();
 
     public int getId() {
         return id;
@@ -26,6 +31,15 @@ public class PaymentEntity implements IEntity{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    public final BooleanProperty onProperty() {
+        return this.on;
     }
 
     @Override

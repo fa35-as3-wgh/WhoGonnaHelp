@@ -1,8 +1,8 @@
 package fa35.group2.control.technicalspecification1;
 
 import fa35.group2.control.ITechnicalSpecification;
-import fa35.group2.model.entities.FriendEntity;
 import fa35.group2.model.IPersistence;
+import fa35.group2.model.entities.FriendEntity;
 import fa35.group2.model.entities.PaymentEntity;
 import fa35.group2.model.entities.SkillEntity;
 
@@ -113,11 +113,13 @@ public class TechnicalSpecification1 implements ITechnicalSpecification
     @Override
     public FriendEntity removeSkillFromFriend(FriendEntity friendEntity, int skillId)
     {
-        List<SkillEntity> skillEntities = friendEntity.getSkills();
-
-        for (SkillEntity skillEntity : skillEntities) {
+        for (SkillEntity skillEntity : persistence.getAllSkills()) {
             if (skillEntity.getId() == skillId) {
-                friendEntity.getSkills().remove(skillEntity);
+                for (SkillEntity friendSkillEntity : friendEntity.getSkills()) {
+                    if (friendSkillEntity.getId() == skillId) {
+                        friendEntity.getSkills().remove(skillEntity);
+                    }
+                }
             }
         }
 
@@ -143,11 +145,13 @@ public class TechnicalSpecification1 implements ITechnicalSpecification
     @Override
     public FriendEntity removePaymentFromFriend(FriendEntity friendEntity, int paymentId)
     {
-        List<PaymentEntity> paymentEntities = friendEntity.getPayments();
-
-        for (PaymentEntity paymentEntity : paymentEntities) {
+        for (PaymentEntity paymentEntity : persistence.getAllPayments()) {
             if (paymentEntity.getId() == paymentId) {
-                friendEntity.getPayments().remove(paymentEntity);
+                for (PaymentEntity friendPaymentEntity : friendEntity.getPayments()) {
+                    if (friendPaymentEntity.getId() == paymentId) {
+                        friendEntity.getPayments().remove(paymentEntity);
+                    }
+                }
             }
         }
 

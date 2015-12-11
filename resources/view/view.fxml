@@ -1,0 +1,49 @@
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fa35.group2.view.gui.ViewController">
+    <children>
+        <ComboBox id="skillselect" fx:id="skillselect" layoutX="10.0" layoutY="16.0" onAction="#skill_select"
+                  prefHeight="25.0" prefWidth="210.0" promptText="Fähigkeit Auswählen"/>
+        <ListView id="friends" fx:id="friends" layoutX="10.0" layoutY="80.0" onMouseClicked="#get_details"
+                  prefHeight="352.0" prefWidth="210.0"/>
+        <TextArea id="address" fx:id="address" layoutX="242.0" layoutY="80.0" prefHeight="150.0" prefWidth="178.0"/>
+        <TextArea id="notes" fx:id="notes" layoutX="444.0" layoutY="80.0" prefHeight="150.0" prefWidth="178.0"/>
+        <ListView id="skills" fx:id="skills" layoutX="242.0" layoutY="260.0" prefHeight="160.0" prefWidth="178.0"/>
+        <ListView id="payment" fx:id="payment" layoutX="444.0" layoutY="260.0" prefHeight="160.0"
+                  prefWidth="178.0"/>
+        <Text layoutX="9.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Freunde">
+            <font>
+                <Font size="24.0"/>
+            </font>
+        </Text>
+        <Text layoutX="242.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kontakt">
+            <font>
+                <Font size="24.0"/>
+            </font>
+        </Text>
+        <Text layoutX="444.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Notizen">
+            <font>
+                <Font size="24.0"/>
+            </font>
+        </Text>
+        <Text layoutX="242.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Fähigkeiten">
+            <font>
+                <Font size="24.0"/>
+            </font>
+        </Text>
+        <Text layoutX="444.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bezahlung">
+            <font>
+                <Font size="24.0"/>
+            </font>
+        </Text>
+        <Text layoutX="242.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="&lt;--- Wählen Sie die zu erledigende Arbeit aus"/>
+    </children>
+</AnchorPane>
+
