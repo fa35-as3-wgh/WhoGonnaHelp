@@ -16,6 +16,7 @@ public class SkillEntity implements IEntity{
 
     private String name;
 
+    @Transient
     private final BooleanProperty on = new SimpleBooleanProperty();
 
     public int getId() {

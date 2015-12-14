@@ -36,6 +36,7 @@ public class FriendEntity implements IEntity{
             inverseJoinColumns = {@JoinColumn(name = "payment_id")})
     private List<PaymentEntity> payments = new ArrayList<PaymentEntity>();
 
+    @Transient
     private final BooleanProperty on = new SimpleBooleanProperty();
 
     public int getId() {
