@@ -63,21 +63,21 @@ public class Tui
     {
         this.menuPrints.printSkillMenu();
 
-        return this.menuMapper.verifySkillMenuChoose(this.tuiHelper.readLine());
+        return this.menuMapper.verifySkillMenuChoose(this.tuiHelper.readLineWaiting());
     }
 
     public Integer friendMenuSelection()
     {
         this.menuPrints.printFriendMenu();
 
-        return this.menuMapper.verifyFriendMenuChoose(this.tuiHelper.readLine());
+        return this.menuMapper.verifyFriendMenuChoose(this.tuiHelper.readLineWaiting());
     }
 
     public Integer paymentMenuSelection()
     {
         this.menuPrints.printPaymentMenu();
 
-        return this.menuMapper.verifyPaymentMenuChoose(this.tuiHelper.readLine());
+        return this.menuMapper.verifyPaymentMenuChoose(this.tuiHelper.readLineWaiting());
     }
 
     public Integer findFriendBySkillSelection()

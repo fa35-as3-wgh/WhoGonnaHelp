@@ -16,108 +16,115 @@ import java.util.List;
 
 public class AddDeleteController
 {
-    public ITechnicalSpecification technicalSpecification;
+	public ITechnicalSpecification technicalSpecification;
 
-    @FXML
-    private ListView<SkillEntity> skills;
+	@FXML
+	private ListView<SkillEntity> skills;
 
-    @FXML
-    private Button add_payment_btn;
+	@FXML
+	private Button add_payment_btn;
 
-    @FXML
-    private Button add_skill_btn;
+	@FXML
+	private Button add_skill_btn;
 
-    @FXML
-    private TextField add_skill;
+	@FXML
+	private TextField add_skill;
 
-    @FXML
-    private TextField add_payment;
+	@FXML
+	private TextField add_payment;
 
-    @FXML
-    private ListView<PaymentEntity> payment;
+	@FXML
+	private ListView<PaymentEntity> payment;
 
-    @FXML
-    private Button payment_delete_btn;
+	@FXML
+	private Button payment_delete_btn;
 
-    @FXML
-    private Button skill_delete_btn;
+	@FXML
+	private Button skill_delete_btn;
 
-    private List<SkillEntity> skillList;
+	private List<SkillEntity> skillList;
 
-    private List<PaymentEntity> paymentList;
+	private List<PaymentEntity> paymentList;
 
-    @FXML
-    void del_paymentSelection(ActionEvent event)
-    {
-        getMainData();
-        List<Integer> removedPayments = new ArrayList<>();
-        for (int i = 0; i < paymentList.size(); i++) {
-            PaymentEntity payment = paymentList.get(i);
-            if (payment.onProperty().getValue()) {
-                removedPayments.add(payment.getId());
-            }
-            technicalSpecification.removePayments(removedPayments);
-        }
-        getMainData();
-    }
+	@FXML
+	void del_paymentSelection(ActionEvent event)
+	{
+		getMainData();
+		List<Integer> removedPayments = new ArrayList<>();
+		for (int i = 0; i < paymentList.size(); i++)
+		{
+			PaymentEntity payment = paymentList.get(i);
+			if (payment.onProperty().getValue())
+			{
+				removedPayments.add(payment.getId());
+			}
+			technicalSpecification.removePayments(removedPayments);
+		}
+		getMainData();
+	}
 
-    @FXML
-    void del_skillSelection(ActionEvent event)
-    {
-        getMainData();
-        List<Integer> removedSkills = new ArrayList<>();
-        for (int i = 0; i < skillList.size(); i++) {
-            SkillEntity skill = skillList.get(i);
-            if (skill.onProperty().getValue()) {
-                removedSkills.add(skill.getId());
-            }
-            technicalSpecification.removeSkills(removedSkills);
-        }
-        getMainData();
-    }
+	@FXML
+	void del_skillSelection(ActionEvent event)
+	{
+		getMainData();
+		List<Integer> removedSkills = new ArrayList<>();
+		for (int i = 0; i < skillList.size(); i++)
+		{
+			SkillEntity skill = skillList.get(i);
+			if (skill.onProperty().getValue())
+			{
+				removedSkills.add(skill.getId());
+			}
+			technicalSpecification.removeSkills(removedSkills);
+		}
+		getMainData();
+	}
 
-    @FXML
-    void create_skill(ActionEvent event)
-    {
-        if (!add_skill.getText().isEmpty()) {
-        }
-        technicalSpecification.createSkill(add_skill.getText());
-        getMainData();
-    }
+	@FXML
+	void create_skill(ActionEvent event)
+	{
+		if (!add_skill.getText().isEmpty())
+		{
+			technicalSpecification.createSkill(add_skill.getText());
+			add_skill.clear();
+		}
+		getMainData();
 
-    @FXML
-    void create_payment(ActionEvent event)
-    {
-        if (!add_payment.getText().isEmpty()) {
-        }
-        technicalSpecification.createPayment(add_payment.getText());
-        getMainData();
-    }
+	}
 
-    void getMainData()
-    {
-        if(technicalSpecification != null) {
-            paymentList = technicalSpecification.getAllPayments();
-            for (PaymentEntity clearPayment : paymentList) {
-                clearPayment.onProperty().setValue(false);
-            }
-            payment.setItems(FXCollections.observableList(paymentList));
-            payment.setCellFactory(CheckBoxListCell.forListView(PaymentEntity::onProperty));
+	@FXML
+	void create_payment(ActionEvent event)
+	{
+		if (!add_payment.getText().isEmpty())
+		{
+			technicalSpecification.createPayment(add_payment.getText());
+			add_payment.clear();
+		}
+		getMainData();
 
-            skillList = technicalSpecification.getAllSkills();
-            for (SkillEntity clearSkills : skillList) {
-                clearSkills.onProperty().setValue(false);
-            }
-            skills.setItems(FXCollections.observableList(skillList));
-            skills.setCellFactory(CheckBoxListCell.forListView(SkillEntity::onProperty));
-        }
-    }
+	}
 
-    public void setTechnicalSpecification(ITechnicalSpecification technicalSpecification)
-    {
-        this.technicalSpecification = technicalSpecification;
-        getMainData();
-    }
+	void getMainData()
+	{
+		if (technicalSpecification != null)
+		{
+			paymentList = technicalSpecification.getAllPayments();
+
+			payment.setItems(FXCollections.observableList(paymentList));
+			payment.setCellFactory(CheckBoxListCell.forListView(PaymentEntity::onProperty));
+
+			skillList = technicalSpecification.getAllSkills();
+
+			skills.setItems(FXCollections.observableList(skillList));
+			skills.setCellFactory(CheckBoxListCell.forListView(SkillEntity::onProperty));
+		}
+	}
+
+	public void setTechnicalSpecification(ITechnicalSpecification technicalSpecification)
+	{
+		this.technicalSpecification = technicalSpecification;
+		getMainData();
+	}
 
 }
 
